@@ -6,17 +6,19 @@ using System.Threading.Tasks;
 
 namespace Logic
 {
-    internal class UniClass
+    public class UniClass
     {
         public string ClassName { get; set; }
-        public List<UniTask> Tasks { get; set; }
+        public string ClassColor { get; set; }
         public bool IsCompleted { get; set; }
+        public List<UniTask> UniTasks { get; set; }
 
-        public UniClass(string className, List<UniTask> tasks, bool isCompleted)
+        public UniClass(string className, string classColor , bool isCompleted, List<UniTask> uniTasks)
         {
             ClassName = className;
-            Tasks = tasks;  
+            ClassColor = classColor;
             IsCompleted = isCompleted;
+            UniTasks = uniTasks;
         }
     }
 }

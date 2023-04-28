@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Logic;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +22,21 @@ namespace DesktopUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        public ObservableCollection<UniClass> uniClassesCollection { get; set; } = ClassesLogic.GetUniClasses();
+        
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void BtnCreateClass_Click(object sender, RoutedEventArgs e)
+        {
+            UiNavigationHelper.OpenClassCreateWindow();
+        }
+
+        private void BtnEditClass_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

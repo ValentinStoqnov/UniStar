@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logic
 {
-    internal class UniTask
+    public class UniTask
     {
         public string TaskName { get; set; }
         public DateTime DeadLine { get; set; }

@@ -12,20 +12,23 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
-            <Button x:Name="BtnCreateClass" Content="Create New Class"/>
-            <Button x:Name="BtnEditClass" Content="Edit Class"/>
+            <Button x:Name="BtnCreateClass" Content="Create New Class" Click="BtnCreateClass_Click"/>
+            <Button x:Name="BtnEditClass" Content="Edit Class" Click="BtnEditClass_Click"/>
             <Button x:Name="BtnMarkFinishedOrNot" Content="Mark Finished or Not"/>
             <Button x:Name="BtnCalendarClasses" Content="Calendar"/>
         </StackPanel>
         <ListView x:Name="LvClasses"
-                  Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}"
+                  Grid.Row="1" 
+                  ItemsSource="{Binding uniClassesCollection, RelativeSource={RelativeSource AncestorType=Window}}"
                   HorizontalAlignment="Center">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="ContentHere" 
+                        <TextBlock Text="{Binding ClassName}" 
                                    FontSize="30" 
-                                   Margin="0,0,50,0"/>
+                                   Margin="0,0,50,0"
+                                   MinWidth="300"
+                                   MaxWidth="1000"/>
                         <Button Content="Unfinished"
                                 Margin="0,0,5,0"
                                 Background="IndianRed"/>
