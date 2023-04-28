@@ -1,21 +1,19 @@
-﻿<Window x:Class="DesktopUI.MainWindow"
+﻿<Window x:Class="DesktopUI.TasksWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="TasksWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
-            <Button x:Name="BtnCreateClass" Content="Create New Class"/>
-            <Button x:Name="BtnEditClass" Content="Edit Class"/>
-            <Button x:Name="BtnMarkFinishedOrNot" Content="Mark Finished or Not"/>
-            <Button x:Name="BtnCalendarClasses" Content="Calendar"/>
+            <Button x:Name="BtnCreateTask" Content="Create New Task"/>
+            <Button x:Name="BtnEditTask" Content="Edit Task"/>
         </StackPanel>
         <ListView x:Name="LvClasses"
                   Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}"
@@ -23,19 +21,12 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
+                        <Button Content="MarkFinishedOrNot"
+                                Margin="0,0,50,0"/>
                         <TextBlock Text="ContentHere" 
                                    FontSize="30" 
                                    Margin="0,0,50,0"/>
-                        <Button Content="Unfinished"
-                                Margin="0,0,5,0"
-                                Background="IndianRed"/>
-                        <Button Content="Close to deadline"
-                                Margin="0,0,5,0"
-                                Background="DarkOrange"/>
-                        <Button Content="Finished"
-                                Margin="0,0,5,0"
-                                Background="YellowGreen"/>
-                        <Button Content="All"/>
+                        <TextBlock Text="DateHere"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
