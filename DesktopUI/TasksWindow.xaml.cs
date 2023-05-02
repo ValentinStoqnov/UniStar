@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,16 @@ namespace DesktopUI
     /// </summary>
     public partial class TasksWindow : Window
     {
-        public TasksWindow()
+        public TasksWindow(UniClass uniClass)
         {
             InitializeComponent();
+            GetClassData(uniClass);
+        }
+
+        private void GetClassData(UniClass uniClass) 
+        {
+            LvTasks.ItemsSource = TasksLogic.GetUniTasksOC(uniClass);
+            LblClassName.Content = TasksLogic.GetClassName(uniClass);
         }
     }
 }

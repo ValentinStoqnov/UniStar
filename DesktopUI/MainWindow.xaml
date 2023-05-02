@@ -20,7 +20,7 @@
         <ListView x:Name="LvClasses"
                   Grid.Row="1" 
                   ItemsSource="{Binding uniClassesCollection, RelativeSource={RelativeSource AncestorType=Window}}"
-                  HorizontalAlignment="Center">
+                  HorizontalAlignment="Center" MouseDoubleClick="LvClasses_MouseDoubleClick">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">

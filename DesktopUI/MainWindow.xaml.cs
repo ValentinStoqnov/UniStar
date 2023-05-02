@@ -38,5 +38,12 @@ namespace DesktopUI
         {
             
         }
+
+        private void LvClasses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ListView classesListView = sender as ListView;
+            UniClass selectedUniClass = classesListView.SelectedItem as UniClass;
+            UiNavigationHelper.OpenTasksWindow(selectedUniClass);
+        }
     }
 }

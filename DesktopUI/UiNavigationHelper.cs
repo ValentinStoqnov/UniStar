@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,9 @@ namespace DesktopUI
 {
     static class UiNavigationHelper
     {
-        public static void OpenTasksWindow() 
+        public static void OpenTasksWindow(UniClass uniClass) 
         {
-            TasksWindow tasksWindow = new TasksWindow();
+            TasksWindow tasksWindow = new TasksWindow(uniClass);
             tasksWindow.ShowDialog();
         }
         public static void OpenTaskCreateWindow() 

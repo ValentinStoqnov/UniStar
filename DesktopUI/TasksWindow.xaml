@@ -15,8 +15,13 @@
             <Button x:Name="BtnCreateTask" Content="Create New Task"/>
             <Button x:Name="BtnEditTask" Content="Edit Task"/>
         </StackPanel>
-        <ListView x:Name="LvClasses"
-                  Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}"
+        <Label x:Name="LblClassName"
+               Content="Class Name Here" 
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               FontSize="18"/>
+        <ListView x:Name="LvTasks"
+                  Grid.Row="1"
                   HorizontalAlignment="Center">
             <ListView.ItemTemplate>
                 <DataTemplate>
