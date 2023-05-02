@@ -5,8 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopUI"
         mc:Ignorable="d"
-        Title="TaskCreateOrEditWindow" Height="450" Width="800">
+        Title="TaskCreateOrEditWindow" Height="160" Width="300" WindowStartupLocation="CenterScreen">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <Label Content="Name" 
+                   HorizontalAlignment="Center"/>
+            <TextBox x:Name="TbTaskName" 
+                     Text="PutNameHere"/>
+            <Label Content="Date"
+                   HorizontalAlignment="Center"/>
+            <DatePicker x:Name="DatePicker"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1">
+            <Label Content="Color" 
+                   HorizontalAlignment="Center"/>
+            <Canvas Height="30" Width="30" Background="DarkRed"/>
+        </StackPanel>
+        <Button x:Name="BtnSave" 
+                Content="Save"
+                Grid.ColumnSpan="2"
+                Grid.Row="1"
+                HorizontalAlignment="Center"
+                Width="100" 
+                Click="BtnSave_Click"/>
     </Grid>
 </Window>

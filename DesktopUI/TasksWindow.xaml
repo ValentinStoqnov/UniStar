@@ -12,7 +12,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
-            <Button x:Name="BtnCreateTask" Content="Create New Task"/>
+            <Button x:Name="BtnCreateTask" Content="Create New Task" Click="BtnCreateTask_Click"/>
             <Button x:Name="BtnEditTask" Content="Edit Task"/>
         </StackPanel>
         <Label x:Name="LblClassName"
@@ -28,10 +28,10 @@
                     <StackPanel Orientation="Horizontal">
                         <Button Content="MarkFinishedOrNot"
                                 Margin="0,0,50,0"/>
-                        <TextBlock Text="ContentHere" 
+                        <TextBlock Text="{Binding TaskName}" 
                                    FontSize="30" 
                                    Margin="0,0,50,0"/>
-                        <TextBlock Text="DateHere"/>
+                        <TextBlock Text="{Binding DeadLine}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

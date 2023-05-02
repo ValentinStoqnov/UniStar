@@ -20,9 +20,12 @@ namespace DesktopUI
     /// </summary>
     public partial class TasksWindow : Window
     {
+        private UniClass _currentUniClass;
+        
         public TasksWindow(UniClass uniClass)
         {
             InitializeComponent();
+            _currentUniClass = uniClass;
             GetClassData(uniClass);
         }
 
@@ -30,6 +33,11 @@ namespace DesktopUI
         {
             LvTasks.ItemsSource = TasksLogic.GetUniTasksOC(uniClass);
             LblClassName.Content = TasksLogic.GetClassName(uniClass);
+        }
+
+        private void BtnCreateTask_Click(object sender, RoutedEventArgs e)
+        {
+            UiNavigationHelper.OpenTaskCreateWindow(_currentUniClass);
         }
     }
 }

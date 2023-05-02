@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,18 @@ namespace DesktopUI
     /// </summary>
     public partial class TaskCreateOrEditWindow : Window
     {
-        public TaskCreateOrEditWindow()
+        UniClass _currentUniClass;
+        
+        public TaskCreateOrEditWindow(UniClass uniClass)
         {
+            _currentUniClass = uniClass;
             InitializeComponent();
+        }
+
+        private void BtnSave_Click(object sender, RoutedEventArgs e)
+        {
+            TasksLogic.CreateNewTask(_currentUniClass, TbTaskName.Text, DatePicker.Text);
+            this.Close();
         }
     }
 }
