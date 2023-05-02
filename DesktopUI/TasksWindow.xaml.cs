@@ -1,6 +1,7 @@
 ﻿using Logic;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,18 +27,19 @@ namespace DesktopUI
         {
             InitializeComponent();
             _currentUniClass = uniClass;
-            GetClassData(uniClass);
+            RefreshClassData(uniClass);
         }
 
-        private void GetClassData(UniClass uniClass) 
+        private void RefreshClassData(UniClass uniClass) 
         {
-            LvTasks.ItemsSource = TasksLogic.GetUniTasksOC(uniClass);
+            LvTasks.ItemsSource = TasksLogic.GetClassTasksListByClass(uniClass);
             LblClassName.Content = TasksLogic.GetClassName(uniClass);
         }
 
         private void BtnCreateTask_Click(object sender, RoutedEventArgs e)
         {
             UiNavigationHelper.OpenTaskCreateWindow(_currentUniClass);
+            RefreshClassData(_currentUniClass);
         }
     }
 }

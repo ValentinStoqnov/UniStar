@@ -32,6 +32,7 @@ namespace DesktopUI
         private void BtnCreateClass_Click(object sender, RoutedEventArgs e)
         {
             UiNavigationHelper.OpenClassCreateWindow();
+            RefreshClassesList();
         }
 
         private void BtnEditClass_Click(object sender, RoutedEventArgs e)
@@ -44,6 +45,17 @@ namespace DesktopUI
             ListView classesListView = sender as ListView;
             UniClass selectedUniClass = classesListView.SelectedItem as UniClass;
             UiNavigationHelper.OpenTasksWindow(selectedUniClass);
+        }
+
+        private void SetupData() 
+        { 
+            
+        }
+
+        public void RefreshClassesList() 
+        {
+            uniClassesCollection = ClassesLogic.GetUniClasses();
+            LvClasses.ItemsSource = uniClassesCollection;
         }
     }
 }

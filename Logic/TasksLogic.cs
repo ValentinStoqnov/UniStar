@@ -12,20 +12,42 @@ namespace Logic
     {
         private static string dataFolderPath = AppDomain.CurrentDomain.BaseDirectory + "Data\\";
 
-        public static ObservableCollection<UniTask> GetUniTasksOC(UniClass uniClass) 
+        public static ObservableCollection<UniTask> GetClassTasksListByClass(UniClass uniClass)
         {
-            List<UniTask> tasks = new List<UniTask>(uniClass.UniTasks);
-            ObservableCollection<UniTask> tasksOC = new ObservableCollection<UniTask>(tasks);
-            return tasksOC;
+            string xmlFilePath = dataFolderPath + $"{uniClass.ClassName}.xml";
+            return GetClassTasksListByFilePath(xmlFilePath);
         }
 
-        public static string GetClassName(UniClass uniClass) 
+        public static ObservableCollection<UniTask> GetClassTasksListByFilePath(string xmlFilePath)
         {
-            string uniClassName = uniClass.ClassName;
-            return uniClassName;
+            ObservableCollection<UniTask> taskList = new ObservableCollection<UniTask>();
+
+            //Loads XML File
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load(xmlFilePath);
+
+            //Gets All the Class Tasks
+            XmlNodeList ProductsNodeList = xmlDocument.DocumentElement.GetElementsByTagName("Tasks");
+            if (ProductsNodeList.Item(0).ChildNodes.Count > 0)
+            {
+                for (int i = 0; i < ProductsNodeList.Item(0).ChildNodes.Count; i++)
+                {
+                    string taskName = ProductsNodeList.Item(0).ChildNodes.Item(i).ChildNodes.Item(0).InnerText;
+                    DateTime deadLine = (Convert.ToDateTime(ProductsNodeList.Item(0).ChildNodes.Item(i).ChildNodes.Item(1).InnerText));
+                    bool isCompleted = (Convert.ToBoolean(ProductsNodeList.Item(0).ChildNodes.Item(i).ChildNodes.Item(2).InnerText));
+                    UniTask uniTask = new UniTask(taskName, deadLine, isCompleted);
+                    taskList.Add(uniTask);
+                }
+            }
+            return taskList;
         }
 
-        public static void CreateNewTask(UniClass uniClass,string taskName,string taskDeadline) 
+        public static string GetClassName(UniClass uniClass)
+        {
+            return uniClass.ClassName;
+        }
+
+        public static void CreateNewTask(UniClass uniClass, string taskName, string taskDeadline)
         {
             string dataFolderPathWithFileName = dataFolderPath + $"{uniClass.ClassName}.xml";
 
@@ -52,8 +74,36 @@ namespace Logic
             newTaskName.InnerText = taskName;
             newTaskDeadLine.InnerText = taskDeadline;
             newTaskIsCompleted.InnerText = "False";
-            
+
             xmlDocument.Save(dataFolderPathWithFileName);
+        }
+
+        public static Tuple<ObservableCollection<UniTask>, ObservableCollection<UniTask>, ObservableCollection<UniTask>> GetFinishedUnifishedCloseToDeadLine(UniClass uniClass)
+        {
+            var finishedTasks = new ObservableCollection<UniTask>();
+            var unfinishedTasks = new ObservableCollection<UniTask>();
+            var closeToDeadLineTasks = new ObservableCollection<UniTask>();
+
+            foreach (UniTask task in GetClassTasksListByClass(uniClass))
+            {
+                if (task.IsCompleted)
+                {
+                    finishedTasks.Add(task);
+                }
+                else if (!task.IsCompleted) 
+                {
+                    var TimeDifference = DateTime.Now - task.DeadLine;
+                    if (TimeDifference.Days <= 5)
+                    {
+                        closeToDeadLineTasks.Add(task);
+                    }
+                    else 
+                    { 
+                        unfinishedTasks.Add(task);
+                    } 
+                }
+            }
+            return Tuple.Create(finishedTasks,unfinishedTasks,closeToDeadLineTasks);
         }
     }
 }

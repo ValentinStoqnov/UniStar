@@ -37,7 +37,7 @@ namespace Logic
             ObservableCollection<UniClass> classesList = new ObservableCollection<UniClass>();
             foreach (FileInfo xmlFile in directoryInfo.GetFiles()) 
             {
-                UniClass uniClass = new UniClass(GetClassName(xmlFile.FullName), "Color", true, GetClassTasksList(xmlFile.FullName));
+                UniClass uniClass = new UniClass(GetClassName(xmlFile.FullName), "Color", true, TasksLogic.GetClassTasksListByFilePath(xmlFile.FullName));
                 classesList.Add(uniClass);
             }
             return classesList;
@@ -53,29 +53,6 @@ namespace Logic
             string className = NameNodeList.Item(0).InnerText;
             
             return className;
-        }
-        private static List<UniTask> GetClassTasksList(string xmlFilePath) 
-        { 
-            List<UniTask> classesList = new List<UniTask>();
-
-            //Loads XML File
-            XmlDocument xmlDocument = new XmlDocument();
-            xmlDocument.Load(xmlFilePath);
-
-            //Gets All the Class Tasks
-            XmlNodeList ProductsNodeList = xmlDocument.DocumentElement.GetElementsByTagName("Tasks");
-            if (ProductsNodeList.Item(0).ChildNodes.Count > 0) 
-            {
-                for (int i = 0; i < ProductsNodeList.Item(0).ChildNodes.Count; i++)
-                {
-                    string taskName = ProductsNodeList.Item(0).ChildNodes.Item(i).ChildNodes.Item(0).InnerText;
-                    DateTime deadLine = (Convert.ToDateTime(ProductsNodeList.Item(0).ChildNodes.Item(i).ChildNodes.Item(1).InnerText));
-                    bool isCompleted = (Convert.ToBoolean(ProductsNodeList.Item(0).ChildNodes.Item(i).ChildNodes.Item(2).InnerText));
-                    UniTask uniTask = new UniTask(taskName, deadLine, isCompleted);
-                    classesList.Add(uniTask);
-                }
-            }
-            return classesList;
         }
     }
 }
