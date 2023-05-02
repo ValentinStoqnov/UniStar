@@ -13,6 +13,9 @@ namespace Logic
         public string ClassColor { get; set; }
         public bool IsCompleted { get; set; }
         public ObservableCollection<UniTask> UniTasks { get; set; }
+        public int UnfinishedTasks { get; set; }
+        public int FinishedTasks { get; set; }
+        public int CloseToDeadlineTasks { get; set; }
 
         public UniClass(string className, string classColor , bool isCompleted, ObservableCollection<UniTask> uniTasks)
         {

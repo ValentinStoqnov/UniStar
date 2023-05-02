@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopUI"
         mc:Ignorable="d"
-        Title="TasksWindow" Height="450" Width="800">
+        Title="TasksWindow" Height="450" Width="800" Closing="Window_Closing">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -28,6 +28,7 @@
                     <StackPanel Orientation="Horizontal">
                         <Button Content="MarkFinishedOrNot"
                                 Margin="0,0,50,0"/>
+                        <Label x:Name="isFinishedLabel" Content="{Binding Status}"/>
                         <TextBlock Text="{Binding TaskName}" 
                                    FontSize="30" 
                                    Margin="0,0,50,0"/>

@@ -29,13 +29,13 @@
                                    Margin="0,0,50,0"
                                    MinWidth="300"
                                    MaxWidth="1000"/>
-                        <Button Content="Unfinished"
+                        <Button Content="{Binding UnfinishedTasks}"
                                 Margin="0,0,5,0"
                                 Background="IndianRed"/>
-                        <Button Content="Close to deadline"
+                        <Button Content="{Binding CloseToDeadlineTasks}"
                                 Margin="0,0,5,0"
                                 Background="DarkOrange"/>
-                        <Button Content="Finished"
+                        <Button Content="{Binding FinishedTasks}"
                                 Margin="0,0,5,0"
                                 Background="YellowGreen"/>
                         <Button Content="All"/>

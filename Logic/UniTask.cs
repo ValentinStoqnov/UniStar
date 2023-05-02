@@ -11,6 +11,7 @@ namespace Logic
         public string TaskName { get; set; }
         public DateTime DeadLine { get; set; }
         public bool IsCompleted { get; set; }
+        public string Status { get; set; }
 
         public UniTask(string taskName, DateTime deadLine, bool isCompleted)
         {

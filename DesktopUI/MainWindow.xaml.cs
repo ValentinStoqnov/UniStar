@@ -22,11 +22,21 @@ namespace DesktopUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        public ObservableCollection<UniClass> uniClassesCollection { get; set; } = ClassesLogic.GetUniClasses();
-        
+        public ObservableCollection<UniClass> uniClassesCollection { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
+            RefreshClassesList();
+            //test();
+        }
+
+        void test() 
+        {
+            
+            var TimeDifference = DateTime.Now - uniClassesCollection[2].UniTasks[1].DeadLine;
+            MessageBox.Show(TimeDifference.Days.ToString());
+
         }
 
         private void BtnCreateClass_Click(object sender, RoutedEventArgs e)
@@ -37,7 +47,7 @@ namespace DesktopUI
 
         private void BtnEditClass_Click(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
         private void LvClasses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -47,15 +57,22 @@ namespace DesktopUI
             UiNavigationHelper.OpenTasksWindow(selectedUniClass);
         }
 
-        private void SetupData() 
-        { 
-            
+        private void GetFilteredTasks()
+        {
+            foreach (UniClass uniClass in LvClasses.Items)
+            {
+                var Filter = TasksLogic.GetFinishedUnfinishedCloseToDeadLineObservableCollections(uniClass);
+                uniClass.FinishedTasks = Filter.Item1.Count;
+                uniClass.UnfinishedTasks = Filter.Item2.Count;
+                uniClass.CloseToDeadlineTasks = Filter.Item3.Count;
+            }
         }
 
-        public void RefreshClassesList() 
+        public void RefreshClassesList()
         {
             uniClassesCollection = ClassesLogic.GetUniClasses();
             LvClasses.ItemsSource = uniClassesCollection;
+            GetFilteredTasks();
         }
     }
 }

@@ -78,7 +78,8 @@ namespace Logic
             xmlDocument.Save(dataFolderPathWithFileName);
         }
 
-        public static Tuple<ObservableCollection<UniTask>, ObservableCollection<UniTask>, ObservableCollection<UniTask>> GetFinishedUnifishedCloseToDeadLine(UniClass uniClass)
+        public static Tuple<ObservableCollection<UniTask>, ObservableCollection<UniTask>, ObservableCollection<UniTask>> GetFinishedUnfinishedCloseToDeadLineObservableCollections
+(UniClass uniClass)
         {
             var finishedTasks = new ObservableCollection<UniTask>();
             var unfinishedTasks = new ObservableCollection<UniTask>();
@@ -92,8 +93,8 @@ namespace Logic
                 }
                 else if (!task.IsCompleted) 
                 {
-                    var TimeDifference = DateTime.Now - task.DeadLine;
-                    if (TimeDifference.Days <= 5)
+                    var TimeDifference = task.DeadLine - DateTime.Now;
+                    if (TimeDifference.Days < 5)
                     {
                         closeToDeadLineTasks.Add(task);
                     }
@@ -105,5 +106,24 @@ namespace Logic
             }
             return Tuple.Create(finishedTasks,unfinishedTasks,closeToDeadLineTasks);
         }
+        public static string DetermineTaskStatus(UniTask uniTask) 
+        {
+            if (!uniTask.IsCompleted)
+            {
+                var TimeDifference = uniTask.DeadLine - DateTime.Now;
+                if (TimeDifference.Days < 5)
+                {
+                    return "Close to deadline";
+                }
+                else
+                {
+                    return "Unfinished";
+                }
+            }
+            else 
+            {
+                return "Finished";
+            }
+        }  
     }
 }

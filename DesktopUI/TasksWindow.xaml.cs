@@ -34,12 +34,27 @@ namespace DesktopUI
         {
             LvTasks.ItemsSource = TasksLogic.GetClassTasksListByClass(uniClass);
             LblClassName.Content = TasksLogic.GetClassName(uniClass);
+            GetTasksStatuses();
+        }
+
+        private void GetTasksStatuses() 
+        {
+            foreach (UniTask task in LvTasks.Items) 
+            { 
+                task.Status = TasksLogic.DetermineTaskStatus(task);
+            }
         }
 
         private void BtnCreateTask_Click(object sender, RoutedEventArgs e)
         {
             UiNavigationHelper.OpenTaskCreateWindow(_currentUniClass);
             RefreshClassData(_currentUniClass);
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MainWindow mw = (MainWindow)Application.Current.MainWindow;
+            mw.RefreshClassesList();
         }
     }
 }
