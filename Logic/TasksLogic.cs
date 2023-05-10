@@ -10,14 +10,11 @@ namespace Logic
 {
     public static class TasksLogic
     {
-        private static string dataFolderPath = AppDomain.CurrentDomain.BaseDirectory + "Data\\";
-
         public static ObservableCollection<UniTask> GetClassTasksListByClass(UniClass uniClass)
         {
-            string xmlFilePath = dataFolderPath + $"{uniClass.ClassName}.xml";
+            string xmlFilePath = FileSystemHelper.GetXmlFilePathByClass(uniClass);
             return GetClassTasksListByFilePath(xmlFilePath);
         }
-
         public static ObservableCollection<UniTask> GetClassTasksListByFilePath(string xmlFilePath)
         {
             ObservableCollection<UniTask> taskList = new ObservableCollection<UniTask>();
@@ -27,36 +24,90 @@ namespace Logic
             xmlDocument.Load(xmlFilePath);
 
             //Gets All the Class Tasks
-            XmlNodeList ProductsNodeList = xmlDocument.DocumentElement.GetElementsByTagName("Tasks");
-            if (ProductsNodeList.Item(0).ChildNodes.Count > 0)
+            XmlNode ProductsNodeList = xmlDocument.SelectSingleNode("/Class/Tasks");
+            if (ProductsNodeList.ChildNodes.Count > 0)
             {
-                for (int i = 0; i < ProductsNodeList.Item(0).ChildNodes.Count; i++)
+                for (int i = 0; i < ProductsNodeList.ChildNodes.Count; i++)
                 {
-                    string taskName = ProductsNodeList.Item(0).ChildNodes.Item(i).ChildNodes.Item(0).InnerText;
-                    DateTime deadLine = (Convert.ToDateTime(ProductsNodeList.Item(0).ChildNodes.Item(i).ChildNodes.Item(1).InnerText));
-                    bool isCompleted = (Convert.ToBoolean(ProductsNodeList.Item(0).ChildNodes.Item(i).ChildNodes.Item(2).InnerText));
+                    string taskName = ProductsNodeList.ChildNodes.Item(i).ChildNodes.Item(0).InnerText;
+                    DateTime deadLine = (Convert.ToDateTime(ProductsNodeList.ChildNodes.Item(i).ChildNodes.Item(1).InnerText));
+                    bool isCompleted = (Convert.ToBoolean(ProductsNodeList.ChildNodes.Item(i).ChildNodes.Item(2).InnerText));
                     UniTask uniTask = new UniTask(taskName, deadLine, isCompleted);
                     taskList.Add(uniTask);
                 }
             }
             return taskList;
         }
+        public static Tuple<ObservableCollection<UniTask>, ObservableCollection<UniTask>, ObservableCollection<UniTask>> GetTaskStatusesObservableCollections(UniClass uniClass)
+        {
+            var finishedTasks = new ObservableCollection<UniTask>();
+            var unfinishedTasks = new ObservableCollection<UniTask>();
+            var closeToDeadLineTasks = new ObservableCollection<UniTask>();
+
+            foreach (UniTask task in GetClassTasksListByClass(uniClass))
+            {
+                switch (TasksLogic.DetermineTaskStatus(task))
+                {
+                    case TaskStatuses.Finished:
+                        finishedTasks.Add(task);
+                        break;
+                    case TaskStatuses.Unfinished:
+                        unfinishedTasks.Add(task);
+                        break;
+                    case TaskStatuses.CloseToDeadline:
+                        closeToDeadLineTasks.Add(task);
+                        break;
+                }
+            }
+            return Tuple.Create(finishedTasks, unfinishedTasks, closeToDeadLineTasks);
+        }
 
         public static string GetClassName(UniClass uniClass)
         {
             return uniClass.ClassName;
         }
-
+        public static Enum DetermineTaskStatus(UniTask uniTask)
+        {
+            if (!uniTask.IsCompleted)
+            {
+                var TimeDifference = uniTask.DeadLine - DateTime.Now;
+                if (TimeDifference.Days < 5)
+                {
+                    return TaskStatuses.CloseToDeadline;
+                }
+                else
+                {
+                    return TaskStatuses.Unfinished;
+                }
+            }
+            else
+            {
+                return TaskStatuses.Finished;
+            }
+        }
+        public static void SetTasksStatusesForUI(ObservableCollection<UniTask> TasksList)
+        {
+            foreach (UniTask task in TasksList)
+            {
+                switch (TasksLogic.DetermineTaskStatus(task))
+                {
+                    case TaskStatuses.Finished:
+                        task.Status = "Finished";
+                        break;
+                    case TaskStatuses.Unfinished:
+                        task.Status = "Unfinished";
+                        break;
+                    case TaskStatuses.CloseToDeadline:
+                        task.Status = "Close to deadline";
+                        break;
+                }
+            }
+        }
         public static void CreateNewTask(UniClass uniClass, string taskName, string taskDeadline)
         {
-            string dataFolderPathWithFileName = dataFolderPath + $"{uniClass.ClassName}.xml";
-
             //Loads XML File
             XmlDocument xmlDocument = new XmlDocument();
-            xmlDocument.Load(dataFolderPathWithFileName);
-
-            //Gets All the Class Tasks
-            XmlNodeList TasksNodeList = xmlDocument.DocumentElement.GetElementsByTagName("Tasks");
+            xmlDocument.Load(FileSystemHelper.GetXmlFilePathByClass(uniClass));
 
             //Create the new task
             XmlNode TasksNode = xmlDocument.SelectSingleNode("/Class/Tasks");
@@ -75,66 +126,18 @@ namespace Logic
             newTaskDeadLine.InnerText = taskDeadline;
             newTaskIsCompleted.InnerText = "False";
 
-            xmlDocument.Save(dataFolderPathWithFileName);
+            xmlDocument.Save(FileSystemHelper.GetXmlFilePathByClass(uniClass));
         }
-
-        public static Tuple<ObservableCollection<UniTask>, ObservableCollection<UniTask>, ObservableCollection<UniTask>> GetTaskStatusesObservableCollections(UniClass uniClass)
+        public static void DeleteTask(UniClass uniClass, UniTask uniTask)
         {
-            var finishedTasks = new ObservableCollection<UniTask>();
-            var unfinishedTasks = new ObservableCollection<UniTask>();
-            var closeToDeadLineTasks = new ObservableCollection<UniTask>();
-
-            foreach (UniTask task in GetClassTasksListByClass(uniClass))
-            {
-                if (task.IsCompleted)
-                {
-                    finishedTasks.Add(task);
-                }
-                else if (!task.IsCompleted) 
-                {
-                    var TimeDifference = task.DeadLine - DateTime.Now;
-                    if (TimeDifference.Days < 5)
-                    {
-                        closeToDeadLineTasks.Add(task);
-                    }
-                    else 
-                    { 
-                        unfinishedTasks.Add(task);
-                    } 
-                }
-            }
-            return Tuple.Create(finishedTasks,unfinishedTasks,closeToDeadLineTasks);
-        }
-        public static string DetermineTaskStatus(UniTask uniTask) 
-        {
-            if (!uniTask.IsCompleted)
-            {
-                var TimeDifference = uniTask.DeadLine - DateTime.Now;
-                if (TimeDifference.Days < 5)
-                {
-                    return "Close to deadline";
-                }
-                else
-                {
-                    return "Unfinished";
-                }
-            }
-            else 
-            {
-                return "Finished";
-            }
-        }
-
-        public static void DeleteTask(UniClass uniClass, UniTask uniTask) 
-        {
-            string dataFolderPathWithFileName = dataFolderPath + $"{uniClass.ClassName}.xml";
-
+            //Loads the Xml Document
             XmlDocument xmlDocument = new XmlDocument();
-            xmlDocument.Load(dataFolderPathWithFileName);
+            xmlDocument.Load(FileSystemHelper.GetXmlFilePathByClass(uniClass));
+            //Deletes the selected Task
             XmlNode TasksNode = xmlDocument.SelectSingleNode($"/Class/Tasks");
             XmlNode SingleTaskNode = xmlDocument.SelectSingleNode($"/Class/Tasks/Task[TaskName='{uniTask.TaskName}' and DeadLine='{uniTask.DeadLine.Date.ToShortDateString()}']");
             TasksNode.RemoveChild(SingleTaskNode);
-            xmlDocument.Save(dataFolderPathWithFileName);
-        }
+            xmlDocument.Save(FileSystemHelper.GetXmlFilePathByClass(uniClass));
+        }  
     }
 }

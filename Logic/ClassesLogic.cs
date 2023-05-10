@@ -12,14 +12,11 @@ namespace Logic
 {
     public static class ClassesLogic
     {
-        private static string dataFolderPath = AppDomain.CurrentDomain.BaseDirectory + "Data\\";
-
-
         public static void CreateNewClass(string className)
         {
-            Directory.CreateDirectory(dataFolderPath);
+            Directory.CreateDirectory(FileSystemHelper.GetDataFolderPath());
             
-            string dataFolderPathWithName = dataFolderPath+$"{className}.xml";
+            string dataFolderPathWithName = FileSystemHelper.GetDataFolderPath()+$"{className}.xml";
             using (XmlWriter writer = XmlWriter.Create(dataFolderPathWithName)) 
             { 
                 writer.WriteStartDocument();
@@ -31,9 +28,13 @@ namespace Logic
                 writer.WriteEndElement();
             }
         }
+        public static void DeleteClass(UniClass uniClass)
+        {
+            File.Delete(FileSystemHelper.GetXmlFilePathByClass(uniClass));
+        }
         public static ObservableCollection<UniClass>  GetUniClasses() 
         { 
-            DirectoryInfo directoryInfo = new DirectoryInfo(dataFolderPath);
+            DirectoryInfo directoryInfo = new DirectoryInfo(FileSystemHelper.GetDataFolderPath());
             ObservableCollection<UniClass> classesList = new ObservableCollection<UniClass>();
             foreach (FileInfo xmlFile in directoryInfo.GetFiles()) 
             {
@@ -54,10 +55,15 @@ namespace Logic
             
             return className;
         }
-        public static void DeleteClass(UniClass uniClass) 
+        public static void SetClassTasksByStausForUI(ObservableCollection<UniClass> uniClasses)
         {
-            string dataFolderPathWithName = dataFolderPath + $"{uniClass.ClassName}.xml";
-            File.Delete(dataFolderPathWithName);
+            foreach (UniClass uniClass in uniClasses)
+            {
+                var Filter = TasksLogic.GetTaskStatusesObservableCollections(uniClass);
+                uniClass.FinishedTasks = Filter.Item1.Count;
+                uniClass.UnfinishedTasks = Filter.Item2.Count;
+                uniClass.CloseToDeadlineTasks = Filter.Item3.Count;
+            }
         }
     }
 }
