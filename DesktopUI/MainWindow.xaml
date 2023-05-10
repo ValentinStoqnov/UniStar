@@ -16,6 +16,7 @@
             <Button x:Name="BtnEditClass" Content="Edit Class" Click="BtnEditClass_Click"/>
             <Button x:Name="BtnMarkFinishedOrNot" Content="Mark Finished or Not"/>
             <Button x:Name="BtnCalendarClasses" Content="Calendar"/>
+            <Button x:Name="BtnDeleteClass" Content="Delete Class" Click="BtnDeleteClass_Click"/>
         </StackPanel>
         <ListView x:Name="LvClasses"
                   Grid.Row="1" 

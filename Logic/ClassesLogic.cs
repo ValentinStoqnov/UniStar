@@ -54,5 +54,10 @@ namespace Logic
             
             return className;
         }
+        public static void DeleteClass(UniClass uniClass) 
+        {
+            string dataFolderPathWithName = dataFolderPath + $"{uniClass.ClassName}.xml";
+            File.Delete(dataFolderPathWithName);
+        }
     }
 }

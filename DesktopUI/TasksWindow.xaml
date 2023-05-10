@@ -14,6 +14,7 @@
         <StackPanel Orientation="Horizontal">
             <Button x:Name="BtnCreateTask" Content="Create New Task" Click="BtnCreateTask_Click"/>
             <Button x:Name="BtnEditTask" Content="Edit Task"/>
+            <Button x:Name="BtnDeleteTask" Content="Delete Task" Click="BtnDeleteTask_Click"/>
         </StackPanel>
         <Label x:Name="LblClassName"
                Content="Class Name Here" 

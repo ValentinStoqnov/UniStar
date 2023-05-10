@@ -61,7 +61,7 @@ namespace DesktopUI
         {
             foreach (UniClass uniClass in LvClasses.Items)
             {
-                var Filter = TasksLogic.GetFinishedUnfinishedCloseToDeadLineObservableCollections(uniClass);
+                var Filter = TasksLogic.GetTaskStatusesObservableCollections(uniClass);
                 uniClass.FinishedTasks = Filter.Item1.Count;
                 uniClass.UnfinishedTasks = Filter.Item2.Count;
                 uniClass.CloseToDeadlineTasks = Filter.Item3.Count;
@@ -73,6 +73,16 @@ namespace DesktopUI
             uniClassesCollection = ClassesLogic.GetUniClasses();
             LvClasses.ItemsSource = uniClassesCollection;
             GetFilteredTasks();
+        }
+
+        private void BtnDeleteClass_Click(object sender, RoutedEventArgs e)
+        {
+            if (LvClasses.SelectedItems != null) 
+            {
+                UniClass uniClass = LvClasses.SelectedItem as UniClass;
+                ClassesLogic.DeleteClass(uniClass);
+                RefreshClassesList();
+            }
         }
     }
 }

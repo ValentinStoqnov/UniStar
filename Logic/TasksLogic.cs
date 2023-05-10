@@ -78,8 +78,7 @@ namespace Logic
             xmlDocument.Save(dataFolderPathWithFileName);
         }
 
-        public static Tuple<ObservableCollection<UniTask>, ObservableCollection<UniTask>, ObservableCollection<UniTask>> GetFinishedUnfinishedCloseToDeadLineObservableCollections
-(UniClass uniClass)
+        public static Tuple<ObservableCollection<UniTask>, ObservableCollection<UniTask>, ObservableCollection<UniTask>> GetTaskStatusesObservableCollections(UniClass uniClass)
         {
             var finishedTasks = new ObservableCollection<UniTask>();
             var unfinishedTasks = new ObservableCollection<UniTask>();
@@ -124,6 +123,18 @@ namespace Logic
             {
                 return "Finished";
             }
-        }  
+        }
+
+        public static void DeleteTask(UniClass uniClass, UniTask uniTask) 
+        {
+            string dataFolderPathWithFileName = dataFolderPath + $"{uniClass.ClassName}.xml";
+
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load(dataFolderPathWithFileName);
+            XmlNode TasksNode = xmlDocument.SelectSingleNode($"/Class/Tasks");
+            XmlNode SingleTaskNode = xmlDocument.SelectSingleNode($"/Class/Tasks/Task[TaskName='{uniTask.TaskName}' and DeadLine='{uniTask.DeadLine.Date.ToShortDateString()}']");
+            TasksNode.RemoveChild(SingleTaskNode);
+            xmlDocument.Save(dataFolderPathWithFileName);
+        }
     }
 }

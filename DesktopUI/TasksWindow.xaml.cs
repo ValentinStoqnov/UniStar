@@ -56,5 +56,15 @@ namespace DesktopUI
             MainWindow mw = (MainWindow)Application.Current.MainWindow;
             mw.RefreshClassesList();
         }
+
+        private void BtnDeleteTask_Click(object sender, RoutedEventArgs e)
+        {
+            if (LvTasks.SelectedItem != null) 
+            {
+                UniTask uniTask = LvTasks.SelectedItem as UniTask;
+                TasksLogic.DeleteTask(_currentUniClass, uniTask);
+                RefreshClassData(_currentUniClass);
+            } 
+        }
     }
 }
