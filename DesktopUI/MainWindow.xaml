@@ -5,44 +5,273 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="UniStar"
+        WindowStartupLocation="CenterScreen"
+        MinHeight="600" 
+        MinWidth="920" 
+        Height="600" 
+        Width="920"
+        WindowStyle="None">
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+            ResizeBorderThickness="6"
+            CaptionHeight="28"
+            CornerRadius="25,25,10,10"
+            GlassFrameThickness="0">
+        </WindowChrome>
+    </WindowChrome.WindowChrome>
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="BaseButtonTemplate">
+            <Setter Property="Background" Value="#FF005BA2"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <Style TargetType="Button" x:Key="WindowButtonsTemplate">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="Border" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="DimGray" TargetName="Border" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="WindowCloseButtonTemplate" BasedOn="{StaticResource WindowButtonsTemplate}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="Border" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="DarkRed" TargetName="Border" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#FF292929">
         <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="70"/>
             <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal">
-            <Button x:Name="BtnCreateClass" Content="Create New Class" Click="BtnCreateClass_Click"/>
-            <Button x:Name="BtnEditClass" Content="Edit Class" Click="BtnEditClass_Click"/>
-            <Button x:Name="BtnMarkFinishedOrNot" Content="Mark Finished or Not"/>
-            <Button x:Name="BtnCalendarClasses" Content="Calendar"/>
-            <Button x:Name="BtnDeleteClass" Content="Delete Class" Click="BtnDeleteClass_Click"/>
-        </StackPanel>
+        <Grid Background="#FF1B1B1B">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock 
+                Text="UniStar"
+                Foreground="White"
+                Grid.Column="1"
+                HorizontalAlignment="Center"
+                FontSize="20"/>
+            <StackPanel Orientation="Horizontal" 
+                        Grid.Column="2"
+                        HorizontalAlignment="Right">
+                <Button 
+                    Style="{StaticResource WindowButtonsTemplate}"
+                    Content="-"
+                    x:Name="BtnMinimizeWindow" 
+                    Click="BtnMinimizeWindow_Click"/>
+                <Button 
+                    Style="{StaticResource WindowButtonsTemplate}"
+                    Content="[ ]"
+                    x:Name="BtnMaximizeWindow" 
+                    Click="BtnMaximizeWindow_Click"/>
+                <Button 
+                    Style="{StaticResource WindowCloseButtonTemplate}"
+                    Content="X"
+                    x:Name="BtnCloseWindow" 
+                    Click="BtnCloseWindow_Click"/>
+            </StackPanel>
+        </Grid>
+        <Border BorderThickness="0,0,0,1" 
+                BorderBrush="Black"
+                Margin="0,0,0,0"
+                Background="#FF212121"
+                Grid.Row="1">
+            <Grid VerticalAlignment="Center"
+                  Background="#FF212121">
+                <StackPanel 
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Left">
+                    <Button x:Name="BtnCreateClass" 
+                            Content="Create New Class" 
+                            Click="BtnCreateClass_Click"
+                            Style="{StaticResource BaseButtonTemplate}"/>
+                    <Button x:Name="BtnEditClass" 
+                            Content="Edit Class" 
+                            Click="BtnEditClass_Click"
+                            Style="{StaticResource BaseButtonTemplate}"/>
+                </StackPanel>
+                <Button x:Name="BtnCalendarClasses" 
+                        Content="Calendar"
+                        HorizontalAlignment="Center"
+                        Style="{StaticResource BaseButtonTemplate}"/>
+                <Button x:Name="BtnDeleteClass" 
+                        Content="Delete Class" 
+                        Click="BtnDeleteClass_Click"
+                        HorizontalAlignment="Right"
+                        Style="{StaticResource BaseButtonTemplate}"/>
+            </Grid>
+        </Border>
+        <Grid Grid.Row="2" Margin="6,0,6,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition MinWidth="300"/>
+            </Grid.ColumnDefinitions>
+            <Border BorderThickness="0,0,1,0" 
+                    BorderBrush="Black" 
+                    Margin="0,0,0,3">
+                <Label Content="Progress" 
+                       HorizontalAlignment="Left" 
+                       FontWeight="SemiBold"
+                       FontSize="12"
+                       Foreground="White"/>
+            </Border>
+
+            <Label FontSize="12" 
+                   FontWeight="SemiBold" 
+                   Content="Classes"
+                   Grid.Column="1"
+                   Margin="15,0,0,0"
+                   Foreground="White"/>
+            <StackPanel Grid.Column="3" Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <Label FontSize="12" 
+                       FontWeight="SemiBold" 
+                       Content="Unfinished"
+                       HorizontalContentAlignment="Center"
+                       Width="70"
+                       Foreground="White"/>
+                <Label HorizontalAlignment="Center"
+                       HorizontalContentAlignment="Center"
+                       Width="70"
+                       Foreground="White">
+                    <TextBlock Text="Deadline soon" 
+                               TextWrapping="Wrap"
+                               TextAlignment="Center"
+                               FontSize="12" 
+                               FontWeight="SemiBold"
+                               HorizontalAlignment="Center"/>
+                </Label>
+                <Label FontSize="12" 
+                       FontWeight="SemiBold" 
+                       Content="Finished"
+                       HorizontalContentAlignment="Center"
+                       Width="70"
+                       Foreground="White"/>
+                <Label FontSize="12" 
+                       FontWeight="SemiBold" 
+                       Content="All"
+                       HorizontalContentAlignment="Center"
+                       Width="70"
+                       Foreground="White"/>
+            </StackPanel>
+        </Grid>
         <ListView x:Name="LvClasses"
-                  Grid.Row="1" 
-                  ItemsSource="{Binding uniClassesCollection, RelativeSource={RelativeSource AncestorType=Window}}"
-                  HorizontalAlignment="Center" MouseDoubleClick="LvClasses_MouseDoubleClick">
+                  Grid.Row="3"
+                  BorderThickness="0,1,0,0"
+                  BorderBrush="Black"
+                  HorizontalAlignment="Stretch"
+                  HorizontalContentAlignment="Stretch"
+                  ItemsSource="{Binding uniClassesCollection, RelativeSource={RelativeSource AncestorType=Window}}" 
+                  MouseDoubleClick="LvClasses_MouseDoubleClick" 
+                  d:ItemsSource="{d:SampleData ItemCount=5}"
+                  Background="#FF292929"
+                  >
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="3"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition MinWidth="300"/>
+                        </Grid.ColumnDefinitions>
+                        <Rectangle 
+                            Grid.Row="1" 
+                            Grid.Column="0"
+                            Grid.ColumnSpan="4">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0,0">
+                                    <GradientStop Color="Red" Offset="0"/>
+                                    <GradientStop Color="Transparent" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <Border BorderThickness="0,0,1,0" 
+                                BorderBrush="Black">
+                            <Label Content="100%" 
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Left"
+                                   Foreground="White"/>
+                        </Border>
                         <TextBlock Text="{Binding ClassName}" 
-                                   FontSize="30" 
-                                   Margin="0,0,50,0"
-                                   MinWidth="300"
-                                   MaxWidth="1000"/>
-                        <Button Content="{Binding UnfinishedTasks}"
-                                Margin="0,0,5,0"
-                                Background="IndianRed"/>
-                        <Button Content="{Binding CloseToDeadlineTasks}"
-                                Margin="0,0,5,0"
+                                   FontSize="30"
+                                   Grid.Column="1"
+                                   HorizontalAlignment="Left"
+                                   Margin="15,0,0,0"
+                                   Foreground="White"/>
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Right"
+                                    Grid.Column="3">
+                            <Button Content="{Binding UnfinishedTasks}"
+                                Background="IndianRed"
+                                    Width="70"/>
+                            <Button Content="{Binding CloseToDeadlineTasks}"
+                                Width="70"
                                 Background="DarkOrange"/>
-                        <Button Content="{Binding FinishedTasks}"
-                                Margin="0,0,5,0"
+                            <Button Content="{Binding FinishedTasks}"
+                                Width="70"
                                 Background="YellowGreen"/>
-                        <Button Content="All"/>
-                    </StackPanel>
+                            <Button Content="All"
+                                    Width="70"/>
+                        </StackPanel>
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Create new class" />
+                    <MenuItem Header="Edit class" />
+                    <Separator />
+                    <MenuItem Header="Delete class" />
+                </ContextMenu>
+            </ListView.ContextMenu>
         </ListView>
     </Grid>
 </Window>

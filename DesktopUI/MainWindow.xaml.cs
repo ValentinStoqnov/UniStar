@@ -72,6 +72,26 @@ namespace DesktopUI
             ClassesLogic.SetClassTasksByStausForUI(LvClasses.ItemsSource as ObservableCollection<UniClass>);
         }
 
-        
+        private void BtnMinimizeWindow_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+        private void BtnMaximizeWindow_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Normal;
+            }
+            else
+            {
+                this.WindowState = WindowState.Maximized;
+            }
+        }
+
+        private void BtnCloseWindow_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }
