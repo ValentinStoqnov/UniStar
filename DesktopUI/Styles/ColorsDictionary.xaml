@@ -1,0 +1,23 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Color x:Key="BackgroundDark">#FF292929</Color>
+    <SolidColorBrush x:Key="BackgroundDarkBrush" Color="{StaticResource BackgroundDark}"/>
+
+    <Color x:Key="TitleBarDark">#FF1B1B1B</Color>
+    <SolidColorBrush x:Key="TitleBarDarkBrush" Color="{StaticResource TitleBarDark}"/>
+
+    <Color x:Key="ButtonBarDark">#FF212121</Color>
+    <SolidColorBrush x:Key="ButtonBarDarkBrush" Color="{StaticResource ButtonBarDark}"/>
+
+    <Color x:Key="BasePurpleDark">#FF510071</Color>
+    <SolidColorBrush x:Key="BasePurpleDarkBrush" Color="{StaticResource BasePurpleDark}"/>
+
+    <Color x:Key="MouseOverPurple">#FF9C00DA</Color>
+    <SolidColorBrush x:Key="MouseOverPurpleBrush" Color="{StaticResource MouseOverPurple}"/>
+
+    <Color x:Key="OutlineDarkGray">#FF444444</Color>
+    <SolidColorBrush x:Key="OutlineDarkGrayBrush" Color="{StaticResource OutlineDarkGray}"/>
+
+
+
+</ResourceDictionary>

@@ -12,7 +12,7 @@ namespace Logic
 {
     public static class ClassesLogic
     {
-        public static void CreateNewClass(string className)
+        public static void CreateNewClass(string className, string classColor)
         {
             Directory.CreateDirectory(FileSystemHelper.GetDataFolderPath());
             
@@ -22,7 +22,7 @@ namespace Logic
                 writer.WriteStartDocument();
                 writer.WriteStartElement("Class");
                 writer.WriteElementString("ClassName", className);
-                writer.WriteElementString("ClassColor", "PlaceHolder for Color");
+                writer.WriteElementString("ClassColor", classColor);
                 writer.WriteStartElement("Tasks");
                 writer.WriteEndElement();
                 writer.WriteEndElement();

@@ -12,6 +12,7 @@
         Height="600" 
         Width="920"
         WindowStyle="None">
+    
     <WindowChrome.WindowChrome>
         <WindowChrome 
             ResizeBorderThickness="6"
@@ -20,67 +21,20 @@
             GlassFrameThickness="0">
         </WindowChrome>
     </WindowChrome.WindowChrome>
+    
     <Window.Resources>
-        <Style TargetType="Button" x:Key="BaseButtonTemplate">
-            <Setter Property="Background" Value="#FF005BA2"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Width" Value="100"/>
-            <Setter Property="Height" Value="50"/>
-            <Setter Property="Margin" Value="2"/>
-            <Setter Property="BorderBrush" Value="Black"/>
-            <Setter Property="BorderThickness" Value="0"/>
-        </Style>
-        <Style TargetType="Button" x:Key="WindowButtonsTemplate">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Width" Value="30"/>
-            <Setter Property="Height" Value="30"/>
-            <Setter Property="Margin" Value="0"/>
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
-            <Setter Property="BorderBrush" Value="Black"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border x:Name="Border" Background="{TemplateBinding Background}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="DimGray" TargetName="Border" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style TargetType="Button" x:Key="WindowCloseButtonTemplate" BasedOn="{StaticResource WindowButtonsTemplate}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border x:Name="Border" Background="{TemplateBinding Background}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="DarkRed" TargetName="Border" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        
+        
     </Window.Resources>
 
-    <Grid Background="#FF292929">
+    <Grid Background="{StaticResource BackgroundDarkBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="70"/>
             <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid Background="#FF1B1B1B">
+        <Grid Background="{StaticResource TitleBarDarkBrush}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="3*"/>
@@ -88,10 +42,8 @@
             </Grid.ColumnDefinitions>
             <TextBlock 
                 Text="UniStar"
-                Foreground="White"
                 Grid.Column="1"
-                HorizontalAlignment="Center"
-                FontSize="20"/>
+                Style="{StaticResource TitleBarTbStyle}"/>
             <StackPanel Orientation="Horizontal" 
                         Grid.Column="2"
                         HorizontalAlignment="Right">
@@ -115,10 +67,10 @@
         <Border BorderThickness="0,0,0,1" 
                 BorderBrush="Black"
                 Margin="0,0,0,0"
-                Background="#FF212121"
+                Background="{StaticResource ButtonBarDarkBrush}"
                 Grid.Row="1">
             <Grid VerticalAlignment="Center"
-                  Background="#FF212121">
+                  Background="{StaticResource ButtonBarDarkBrush}">
                 <StackPanel 
                     Orientation="Horizontal"
                     HorizontalAlignment="Left">
@@ -198,7 +150,9 @@
                        Foreground="White"/>
             </StackPanel>
         </Grid>
-        <ListView x:Name="LvClasses"
+        <ListView Visibility="Visible" 
+                  x:Name="LvClasses"
+                  ItemContainerStyle="{StaticResource ListViewContainerTemplate}"
                   Grid.Row="3"
                   BorderThickness="0,1,0,0"
                   BorderBrush="Black"
@@ -207,7 +161,7 @@
                   ItemsSource="{Binding uniClassesCollection, RelativeSource={RelativeSource AncestorType=Window}}" 
                   MouseDoubleClick="LvClasses_MouseDoubleClick" 
                   d:ItemsSource="{d:SampleData ItemCount=5}"
-                  Background="#FF292929"
+                  Background="{StaticResource BackgroundDarkBrush}"
                   >
             <ListView.ItemTemplate>
                 <DataTemplate>

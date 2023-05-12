@@ -5,32 +5,119 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopUI"
         mc:Ignorable="d"
-        Title="ClassCreateOrEditWindow" Height="130" Width="300" WindowStartupLocation="CenterScreen">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="30"/>
-        </Grid.RowDefinitions>
-        <StackPanel>
-            <Label Content="Name" 
-                   HorizontalAlignment="Center"/>
-            <TextBox x:Name="TbClassName" 
-                     Text="PutNameHere"/>
-        </StackPanel>
-        <StackPanel Grid.Column="1">
-            <Label Content="Color" 
-                   HorizontalAlignment="Center"/>
-            <Canvas Height="30" Width="30" Background="DarkRed"/>
-        </StackPanel>
-        <Button x:Name="BtnSave" 
+        Title="ClassCreateOrEditWindow" 
+        Height="160" 
+        Width="350" 
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None">
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+            ResizeBorderThickness="6"
+            CaptionHeight="28"
+            CornerRadius="8,8,8,8"
+            GlassFrameThickness="0">
+        </WindowChrome>
+    </WindowChrome.WindowChrome>
+    <Border BorderBrush="{StaticResource OutlineDarkGrayBrush}" 
+            BorderThickness="2">
+        <Grid Background="{StaticResource BackgroundDarkBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <Border Grid.ColumnSpan="2"
+                    Background="{StaticResource TitleBarDarkBrush}">
+                <TextBlock Text="Create a new class"
+                           Style="{StaticResource TitleBarTbStyle}"/>
+            </Border>
+            <StackPanel Grid.Row="1">
+                <Label Content="Name" 
+                   HorizontalAlignment="Center"
+                   Foreground="White"/>
+                <TextBox x:Name="TbClassName" 
+                     Text="PutNameHere"
+                     Margin="10,10,0,0"
+                     Background="DimGray"
+                     />
+            </StackPanel>
+            <StackPanel 
+                Grid.Column="1"
+                Grid.Row="1">
+                <Label Content="Color" 
+                   HorizontalAlignment="Center"
+                   Foreground="White"/>
+                <Button x:Name="BtnColorPicker"
+                        Style="{StaticResource ColorButtonTemplate}" Click="BtnColorPicker_Click">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="Black"/>
+                            <GradientStop Color="Black" Offset="1"/>
+                            <GradientStop Color="#FEFF1700" Offset="0.164"/>
+                            <GradientStop Color="#FEFDFF00" Offset="0.331"/>
+                            <GradientStop Color="#FE37FF00" Offset="0.462"/>
+                            <GradientStop Color="#FE00F9FF" Offset="0.716"/>
+                            <GradientStop Color="#FE0800FF" Offset="0.863"/>
+                            <GradientStop Color="#FE21FC93" Offset="0.579"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+                <Popup x:Name="PopupColorPicker" Width="200" Height="200">
+                    <Border BorderThickness="2"
+                            BorderBrush="{StaticResource OutlineDarkGrayBrush}"
+                            Background="{StaticResource BackgroundDarkBrush}">
+                        <UniformGrid>
+                            <Button Style="{StaticResource ColorButtonTemplate}"
+                                    Background="Red"
+                                    Click="BtnWitnColor_Click"/>
+                            <Button Style="{StaticResource ColorButtonTemplate}"
+                                    Background="Blue"
+                                    Click="BtnWitnColor_Click"/>
+                            <Button Style="{StaticResource ColorButtonTemplate}"
+                                    Background="Yellow"
+                                    Click="BtnWitnColor_Click"/>
+                            <Button Style="{StaticResource ColorButtonTemplate}"
+                                    Background="Green"
+                                    Click="BtnWitnColor_Click"/>
+                            <Button Style="{StaticResource ColorButtonTemplate}"
+                                    Background="Orange"
+                                    Click="BtnWitnColor_Click"/>
+                            <Button Style="{StaticResource ColorButtonTemplate}"
+                                    Background="Orange"
+                                    Click="BtnWitnColor_Click"/>
+                            <Button Style="{StaticResource ColorButtonTemplate}"
+                                    Background="Orange"
+                                    Click="BtnWitnColor_Click"/>
+                            <Button Style="{StaticResource ColorButtonTemplate}"
+                                    Background="Orange"
+                                    Click="BtnWitnColor_Click"/>
+                            <Button Style="{StaticResource ColorButtonTemplate}"
+                                    Background="Orange"
+                                    Click="BtnWitnColor_Click"/>
+                        </UniformGrid>
+                    </Border>
+                </Popup>
+            </StackPanel>
+            <Button x:Name="BtnSave"
+                Style="{StaticResource BaseButtonTemplate}"
                 Content="Save"
-                Grid.ColumnSpan="2"
-                Grid.Row="1"
-                HorizontalAlignment="Center"
-                Width="100" Click="BtnSave_Click"/>
-    </Grid>
+                Grid.Column="0"
+                Grid.Row="2"
+                Margin="10,0,0,0"
+                HorizontalAlignment="Left"
+                Click="BtnSave_Click"/>
+            <Button x:Name="BtnCancel"
+                Style="{StaticResource BaseButtonTemplate}"
+                Content="Cancel"
+                Grid.Column="1"
+                Grid.Row="2"
+                Margin="0,0,10,0"
+                HorizontalAlignment="Right"
+                Click="BtnCancel_Click"/>
+        </Grid>
+    </Border>
 </Window>

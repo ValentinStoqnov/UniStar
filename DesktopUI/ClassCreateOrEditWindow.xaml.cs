@@ -27,8 +27,25 @@ namespace DesktopUI
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            ClassesLogic.CreateNewClass(TbClassName.Text);
+            ClassesLogic.CreateNewClass(TbClassName.Text, BtnColorPicker.Background.ToString());
             this.Close();
+        }
+
+        private void BtnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void BtnColorPicker_Click(object sender, RoutedEventArgs e)
+        {
+            PopupColorPicker.IsOpen = true;
+        }
+
+        private void BtnWitnColor_Click(object sender, RoutedEventArgs e) 
+        {
+            Button btn = sender as Button;
+            BtnColorPicker.Background = btn.Background;
+            PopupColorPicker.IsOpen = false;
         }
     }
 }
