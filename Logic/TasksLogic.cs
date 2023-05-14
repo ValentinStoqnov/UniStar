@@ -133,11 +133,36 @@ namespace Logic
             //Loads the Xml Document
             XmlDocument xmlDocument = new XmlDocument();
             xmlDocument.Load(FileSystemHelper.GetXmlFilePathByClass(uniClass));
-            //Deletes the selected Task
+            //Gets the Task
             XmlNode TasksNode = xmlDocument.SelectSingleNode($"/Class/Tasks");
             XmlNode SingleTaskNode = xmlDocument.SelectSingleNode($"/Class/Tasks/Task[TaskName='{uniTask.TaskName}' and DeadLine='{uniTask.DeadLine.Date.ToShortDateString()}']");
+            //Deletes the Task
             TasksNode.RemoveChild(SingleTaskNode);
             xmlDocument.Save(FileSystemHelper.GetXmlFilePathByClass(uniClass));
-        }  
+        }
+        public static void MarkTaskAsFinishedOrUnfinished(UniClass uniClass, UniTask uniTask) 
+        {
+            //Loads the Xml Document
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load(FileSystemHelper.GetXmlFilePathByClass(uniClass));
+            //Gets the Task's isCompleted field in the XML file
+            XmlNode isCompletedFieldNode = xmlDocument.SelectSingleNode($"/Class/Tasks/Task[TaskName='{uniTask.TaskName}' and DeadLine='{uniTask.DeadLine.Date.ToShortDateString()}']/isCompleted");
+            //Determins if it should set the isCompleted field to true or false
+            bool isCompleted = Convert.ToBoolean(isCompletedFieldNode.InnerText);
+            if (isCompleted != true)
+            {
+                isCompletedFieldNode.InnerText = "True";
+            }
+            else 
+            {
+                isCompletedFieldNode.InnerText = "False";
+            }
+            xmlDocument.Save(FileSystemHelper.GetXmlFilePathByClass(uniClass));
+        }
+        public static TimeSpan CalculateTimeLeft(UniTask uniTask)
+        {
+            TimeSpan timeSpan = uniTask.DeadLine - DateTime.Now;
+            return timeSpan;
+        }
     }
 }

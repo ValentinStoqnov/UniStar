@@ -38,7 +38,7 @@ namespace Logic
             ObservableCollection<UniClass> classesList = new ObservableCollection<UniClass>();
             foreach (FileInfo xmlFile in directoryInfo.GetFiles()) 
             {
-                UniClass uniClass = new UniClass(GetClassName(xmlFile.FullName), "Color", true, TasksLogic.GetClassTasksListByFilePath(xmlFile.FullName));
+                UniClass uniClass = new UniClass(GetClassName(xmlFile.FullName), GetClassColor(xmlFile.FullName), true, TasksLogic.GetClassTasksListByFilePath(xmlFile.FullName));
                 classesList.Add(uniClass);
             }
             return classesList;
@@ -50,10 +50,22 @@ namespace Logic
             xmlDocument.Load(xmlFilePath);
 
             //Gets the Name
-            XmlNodeList NameNodeList = xmlDocument.DocumentElement.GetElementsByTagName("ClassName");
-            string className = NameNodeList.Item(0).InnerText;
+            XmlNode NameNode = xmlDocument.SelectSingleNode("/Class/ClassName");
+            string className = NameNode.InnerText;
             
             return className;
+        }
+        private static string GetClassColor(string xmlFilePath)
+        {
+            //Loads XML File
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load(xmlFilePath);
+
+            //Gets the Name
+            XmlNode ColorNode = xmlDocument.SelectSingleNode("/Class/ClassColor");
+            string classColor = ColorNode.InnerText;
+
+            return classColor;
         }
         public static void SetClassTasksByStausForUI(ObservableCollection<UniClass> uniClasses)
         {

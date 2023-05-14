@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopUI"
         mc:Ignorable="d"
-        Title="UniStar"
+        Title="MainWindow"
         WindowStartupLocation="CenterScreen"
         MinHeight="600" 
         MinWidth="920" 
@@ -150,19 +150,12 @@
                        Foreground="White"/>
             </StackPanel>
         </Grid>
-        <ListView Visibility="Visible" 
-                  x:Name="LvClasses"
-                  ItemContainerStyle="{StaticResource ListViewContainerTemplate}"
+        <ListView x:Name="LvClasses"
                   Grid.Row="3"
-                  BorderThickness="0,1,0,0"
-                  BorderBrush="Black"
-                  HorizontalAlignment="Stretch"
-                  HorizontalContentAlignment="Stretch"
+                  Style="{StaticResource ListViewCustomStyle}"
                   ItemsSource="{Binding uniClassesCollection, RelativeSource={RelativeSource AncestorType=Window}}" 
                   MouseDoubleClick="LvClasses_MouseDoubleClick" 
-                  d:ItemsSource="{d:SampleData ItemCount=5}"
-                  Background="{StaticResource BackgroundDarkBrush}"
-                  >
+                  d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -182,7 +175,7 @@
                             Grid.ColumnSpan="4">
                             <Rectangle.Fill>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0,0">
-                                    <GradientStop Color="Red" Offset="0"/>
+                                    <GradientStop Color="{Binding ClassColor, FallbackValue=Red}" Offset="0"/>
                                     <GradientStop Color="Transparent" Offset="1"/>
                                 </LinearGradientBrush>
                             </Rectangle.Fill>

@@ -38,4 +38,12 @@
         </Setter>
     </Style>
 
+    <Style x:Key="ListViewCustomStyle" TargetType="ListView">
+        <Setter Property="Background" Value="{StaticResource BackgroundDarkBrush}"/>
+        <Setter Property="BorderThickness" Value="0,1,0,0"/>
+        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="ItemContainerStyle" Value="{StaticResource ListViewContainerTemplate}"/>
+    </Style>
 </ResourceDictionary>

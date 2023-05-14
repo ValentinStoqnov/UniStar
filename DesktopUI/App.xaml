@@ -10,7 +10,7 @@
                 <ResourceDictionary Source="Styles/ButtonsDictionary.xaml"/>
                 <ResourceDictionary Source="Styles/TextBlocksDictionary.xaml"/>
                 <ResourceDictionary Source="Styles/WindowsDictionary.xaml"/>
-                <ResourceDictionary Source="Styles/LVItemContainerDictionary.xaml"/>
+                <ResourceDictionary Source="Styles/ListViewStylesDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

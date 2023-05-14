@@ -1,18 +1,9 @@
 ﻿using Logic;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace DesktopUI
 {
@@ -23,27 +14,45 @@ namespace DesktopUI
     {
         private UniClass _currentUniClass;
 
+
         public TasksWindow(UniClass uniClass)
         {
             InitializeComponent();
             _currentUniClass = uniClass;
-            RefreshClassData(uniClass);
+            RefreshClassTaskData(uniClass);
+            StartTaskTimeLeftTimer();
         }
+
+        private void StartTaskTimeLeftTimer() 
+        { 
+            DispatcherTimer dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Tick += DispatcherTimer_Tick;
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer.Start();
+        }
+        private void DispatcherTimer_Tick(object? sender, EventArgs e)
+        {
+            foreach (UniTask task in LvTasks.Items) 
+            {
+                task.TimeLeft -= new TimeSpan(0, 0, 1);
+            }
+        }
+
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             MainWindow mw = (MainWindow)Application.Current.MainWindow;
             mw.RefreshClassesList();
         }
-        private void RefreshClassData(UniClass uniClass)
+        private void RefreshClassTaskData(UniClass uniClass)
         {
             LvTasks.ItemsSource = TasksLogic.GetClassTasksListByClass(uniClass);
-            LblClassName.Content = TasksLogic.GetClassName(uniClass);
+            TbClassName.Text = TasksLogic.GetClassName(uniClass);
             TasksLogic.SetTasksStatusesForUI(LvTasks.ItemsSource as ObservableCollection<UniTask>);
         }
         private void BtnCreateTask_Click(object sender, RoutedEventArgs e)
         {
             UiNavigationHelper.OpenTaskCreateWindow(_currentUniClass);
-            RefreshClassData(_currentUniClass);
+            RefreshClassTaskData(_currentUniClass);
         }
         private void BtnDeleteTask_Click(object sender, RoutedEventArgs e)
         {
@@ -51,8 +60,43 @@ namespace DesktopUI
             {
                 UniTask uniTask = LvTasks.SelectedItem as UniTask;
                 TasksLogic.DeleteTask(_currentUniClass, uniTask);
-                RefreshClassData(_currentUniClass);
+                RefreshClassTaskData(_currentUniClass);
             }
         }
+        private void BtnFinishedOrNot_Click(object sender, RoutedEventArgs e)
+        {
+            //Getting the UniTask
+            Button btn = sender as Button;
+            Grid stackPanel = btn.Parent as Grid;
+            ContentPresenter contentPresenter = stackPanel.TemplatedParent as ContentPresenter;          //DOESNT WORK RIGHT NOW 
+            Border border = contentPresenter.Parent as Border;
+            ListViewItem listViewItem = border.TemplatedParent as ListViewItem;
+            UniTask uniTask = listViewItem.Content as UniTask;
+
+            TasksLogic.MarkTaskAsFinishedOrUnfinished(_currentUniClass, uniTask);
+
+            RefreshClassTaskData(_currentUniClass);
+        }
+       
+        private void BtnMinimizeWindow_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+        private void BtnMaximizeWindow_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Normal;
+            }
+            else
+            {
+                this.WindowState = WindowState.Maximized;
+            }
+        }
+        private void BtnCloseWindow_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
     }
 }
