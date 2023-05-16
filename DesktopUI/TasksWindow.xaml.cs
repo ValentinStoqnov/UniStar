@@ -37,21 +37,27 @@ namespace DesktopUI
                 task.TimeLeft -= new TimeSpan(0, 0, 1);
             }
         }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            MainWindow mw = (MainWindow)Application.Current.MainWindow;
-            mw.RefreshClassesList();
-        }
         private void RefreshClassTaskData(UniClass uniClass)
         {
             LvTasks.ItemsSource = TasksLogic.GetClassTasksListByClass(uniClass);
             TbClassName.Text = TasksLogic.GetClassName(uniClass);
             TasksLogic.SetTasksStatusesForUI(LvTasks.ItemsSource as ObservableCollection<UniTask>);
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MainWindow mw = (MainWindow)Application.Current.MainWindow;
+            mw.RefreshClassesList();
+        }
         private void BtnCreateTask_Click(object sender, RoutedEventArgs e)
         {
             UiNavigationHelper.OpenTaskCreateWindow(_currentUniClass);
+            RefreshClassTaskData(_currentUniClass);
+        }
+        private void BtnEditTask_Click(object sender, RoutedEventArgs e)
+        {
+            UniTask uniTask = LvTasks.SelectedItem as UniTask; 
+            UiNavigationHelper.OpenTaskEditWindow(_currentUniClass,uniTask);
             RefreshClassTaskData(_currentUniClass);
         }
         private void BtnDeleteTask_Click(object sender, RoutedEventArgs e)
@@ -97,6 +103,5 @@ namespace DesktopUI
         {
             this.Close();
         }
-
     }
 }

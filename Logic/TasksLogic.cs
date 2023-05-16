@@ -128,6 +128,25 @@ namespace Logic
 
             xmlDocument.Save(FileSystemHelper.GetXmlFilePathByClass(uniClass));
         }
+        public static void EditTask(UniClass uniClass, UniTask uniTask, string newTaskName, string newTaskDeadline) 
+        {
+            //Loads XML File
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load(FileSystemHelper.GetXmlFilePathByClass(uniClass));
+
+            //Gets the task
+            XmlNode TasksNode = xmlDocument.SelectSingleNode($"/Class/Tasks");
+            XmlNode SingleTaskNode = xmlDocument.SelectSingleNode($"/Class/Tasks/Task[TaskName='{uniTask.TaskName}' and DeadLine='{uniTask.DeadLine.Date.ToShortDateString()}']");
+
+            //Edits the task
+            XmlNodeList TaskNodeChildrenList = SingleTaskNode.ChildNodes;
+            TaskNodeChildrenList[0].InnerText = newTaskName;
+            TaskNodeChildrenList[1].InnerText = newTaskDeadline;
+            TaskNodeChildrenList[2].InnerText = uniTask.IsCompleted.ToString();
+
+            //Saves the document
+            xmlDocument.Save(FileSystemHelper.GetXmlFilePathByClass(uniClass));
+        }
         public static void DeleteTask(UniClass uniClass, UniTask uniTask)
         {
             //Loads the Xml Document

@@ -20,14 +20,39 @@ namespace DesktopUI
     /// </summary>
     public partial class ClassCreateOrEditWindow : Window
     {
+        private CreateOrEditWindowsState createOrEditWindowsState;
+        private UniClass classToEdit;
+
         public ClassCreateOrEditWindow()
         {
             InitializeComponent();
+            TbClassName.Focus();
+        }
+
+        public ClassCreateOrEditWindow(CreateOrEditWindowsState state) : this()
+        {
+            createOrEditWindowsState = state;
+        }
+
+        public ClassCreateOrEditWindow(UniClass uniClass,CreateOrEditWindowsState state) : this()
+        {
+            createOrEditWindowsState = state;
+            classToEdit = uniClass;
+            TbClassName.Text = uniClass.ClassName;
+            BtnColorPicker.Background = (SolidColorBrush)new BrushConverter().ConvertFromString(uniClass.ClassColor);
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            ClassesLogic.CreateNewClass(TbClassName.Text, BtnColorPicker.Background.ToString());
+            switch (createOrEditWindowsState) 
+            {
+                case CreateOrEditWindowsState.Create:
+                    ClassesLogic.CreateNewClass(TbClassName.Text, BtnColorPicker.Background.ToString());
+                    break;
+                case CreateOrEditWindowsState.Edit:
+                    ClassesLogic.EditClass(classToEdit,TbClassName.Text, BtnColorPicker.Background.ToString());
+                    break;
+            }
             this.Close();
         }
 

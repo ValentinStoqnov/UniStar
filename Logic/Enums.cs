@@ -12,4 +12,10 @@ namespace Logic
         Unfinished,
         CloseToDeadline
     }
+
+    public enum CreateOrEditWindowsState 
+    { 
+        Create,
+        Edit
+    }
 }

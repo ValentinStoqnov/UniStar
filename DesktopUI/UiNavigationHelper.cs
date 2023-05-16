@@ -14,24 +14,24 @@ namespace DesktopUI
             TasksWindow tasksWindow = new TasksWindow(uniClass);
             tasksWindow.ShowDialog();
         }
-        public static void OpenTaskCreateWindow(UniClass uniClass) 
+        public static void OpenTaskCreateWindow(UniClass uniClass)
         {
-            TaskCreateOrEditWindow taskCreateOrEditWindow = new TaskCreateOrEditWindow(uniClass);
+            TaskCreateOrEditWindow taskCreateOrEditWindow = new TaskCreateOrEditWindow(uniClass,CreateOrEditWindowsState.Create);
             taskCreateOrEditWindow.ShowDialog();
         }
-        public static void OpenTaskEditWindow(UniClass uniClass) 
+        public static void OpenTaskEditWindow(UniClass uniClass, UniTask uniTask) 
         { 
-            TaskCreateOrEditWindow taskCreateOrEditWindow = new TaskCreateOrEditWindow(uniClass);
+            TaskCreateOrEditWindow taskCreateOrEditWindow = new TaskCreateOrEditWindow(uniClass,CreateOrEditWindowsState.Edit,uniTask);
             taskCreateOrEditWindow.ShowDialog();
         }
         public static void OpenClassCreateWindow() 
         {
-            ClassCreateOrEditWindow classCreateOrEditWindow = new ClassCreateOrEditWindow();
+            ClassCreateOrEditWindow classCreateOrEditWindow = new ClassCreateOrEditWindow(CreateOrEditWindowsState.Create);
             classCreateOrEditWindow.ShowDialog();
         }
-        public static void OpenClassEditWindow() 
+        public static void OpenClassEditWindow(UniClass uniClass) 
         {
-            ClassCreateOrEditWindow classCreateOrEditWindow = new ClassCreateOrEditWindow();
+            ClassCreateOrEditWindow classCreateOrEditWindow = new ClassCreateOrEditWindow(uniClass, CreateOrEditWindowsState.Edit);
             classCreateOrEditWindow.ShowDialog();
         }
 

@@ -46,7 +46,9 @@ namespace DesktopUI
         }
         private void BtnEditClass_Click(object sender, RoutedEventArgs e)
         {
-
+            UniClass uniClass = LvClasses.SelectedItem as UniClass;
+            UiNavigationHelper.OpenClassEditWindow(uniClass);
+            RefreshClassesList();
         }
         private void BtnDeleteClass_Click(object sender, RoutedEventArgs e)
         {

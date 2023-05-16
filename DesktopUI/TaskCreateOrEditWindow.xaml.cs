@@ -20,17 +20,40 @@ namespace DesktopUI
     /// </summary>
     public partial class TaskCreateOrEditWindow : Window
     {
-        UniClass _currentUniClass;
-        
+        private CreateOrEditWindowsState createOrEditWindowsState;
+        private UniClass currentUniClass;
+        private UniTask currentUniTask;
+
         public TaskCreateOrEditWindow(UniClass uniClass)
         {
-            _currentUniClass = uniClass;
+            currentUniClass = uniClass;
             InitializeComponent();
+        }
+        
+        public TaskCreateOrEditWindow(UniClass uniClass, CreateOrEditWindowsState state) : this(uniClass)
+        {
+            createOrEditWindowsState = state;
+        }
+
+        public TaskCreateOrEditWindow(UniClass uniClass, CreateOrEditWindowsState state, UniTask uniTask) : this(uniClass)
+        {
+            TbTaskName.Text = uniTask.TaskName;
+            DatePicker.Text = uniTask.DeadLine.ToShortDateString();
+            createOrEditWindowsState = state;
+            currentUniTask = uniTask;
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            TasksLogic.CreateNewTask(_currentUniClass, TbTaskName.Text, DatePicker.Text);
+            switch (createOrEditWindowsState) 
+            { 
+                case CreateOrEditWindowsState.Create:
+                    TasksLogic.CreateNewTask(currentUniClass, TbTaskName.Text, DatePicker.Text);
+                    break;
+                case CreateOrEditWindowsState.Edit:
+                    TasksLogic.EditTask(currentUniClass, currentUniTask, TbTaskName.Text, DatePicker.Text);
+                    break;
+            }
             this.Close();
         }
     }
