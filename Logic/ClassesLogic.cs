@@ -12,6 +12,55 @@ namespace Logic
 {
     public static class ClassesLogic
     {
+        private static string GetClassName(string xmlFilePath)
+        {
+            //Loads XML File
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load(xmlFilePath);
+
+            //Gets the Name
+            XmlNode NameNode = xmlDocument.SelectSingleNode("/Class/ClassName");
+            string className = NameNode.InnerText;
+
+            return className;
+        }
+        private static string GetClassColor(string xmlFilePath)
+        {
+            //Loads XML File
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load(xmlFilePath);
+
+            //Gets the Name
+            XmlNode ColorNode = xmlDocument.SelectSingleNode("/Class/ClassColor");
+            string classColor = ColorNode.InnerText;
+
+            return classColor;
+        }
+        private static void SetClassTasksByStausForUI(UniClass uniClass)
+        {
+            var Filter = TasksLogic.GetTaskStatusesObservableCollections(uniClass);
+            uniClass.FinishedTasks = Filter.Item1.Count;
+            uniClass.UnfinishedTasks = Filter.Item2.Count;
+            uniClass.CloseToDeadlineTasks = Filter.Item3.Count;
+        }
+        private static void SetClassProgress(UniClass uniClass)
+        {
+            int AllTasks = uniClass.FinishedTasks + uniClass.UnfinishedTasks + uniClass.CloseToDeadlineTasks;
+            int FinishedTasks = uniClass.FinishedTasks;
+            int UnfinishedTasks = uniClass.UnfinishedTasks + uniClass.CloseToDeadlineTasks;
+            float progress;
+
+            if (UnfinishedTasks == 0 && AllTasks >= 0)
+            {
+                progress = 100;
+            }
+            else  
+            {
+                progress = (FinishedTasks * 100) / AllTasks;
+            } 
+            uniClass.ClassProgress = progress;
+        }
+
         public static void CreateNewClass(string className, string classColor)
         {
             Directory.CreateDirectory(FileSystemHelper.GetDataFolderPath());
@@ -52,12 +101,12 @@ namespace Logic
                 xmlDocument.Save(FileSystemHelper.GetDataFolderPath() + $"{newClassName}.xml");
                 File.Delete(FileSystemHelper.GetXmlFilePathByClass(uniClass));
             }
-            else 
+            else
             {
                 xmlDocument.Save(FileSystemHelper.GetXmlFilePathByClass(uniClass));
             }
         }
-        public static ObservableCollection<UniClass> GetUniClasses()
+        public static ObservableCollection<UniClass> GetUniClassesFullData()
         {
             DirectoryInfo directoryInfo = new DirectoryInfo(FileSystemHelper.GetDataFolderPath());
             ObservableCollection<UniClass> classesList = new ObservableCollection<UniClass>();
@@ -65,43 +114,13 @@ namespace Logic
             {
                 UniClass uniClass = new UniClass(GetClassName(xmlFile.FullName), GetClassColor(xmlFile.FullName), true, TasksLogic.GetClassTasksListByFilePath(xmlFile.FullName));
                 classesList.Add(uniClass);
+                SetClassTasksByStausForUI(uniClass);
+                SetClassProgress(uniClass);
             }
+
             return classesList;
         }
-        private static string GetClassName(string xmlFilePath)
-        {
-            //Loads XML File
-            XmlDocument xmlDocument = new XmlDocument();
-            xmlDocument.Load(xmlFilePath);
 
-            //Gets the Name
-            XmlNode NameNode = xmlDocument.SelectSingleNode("/Class/ClassName");
-            string className = NameNode.InnerText;
-
-            return className;
-        }
-        private static string GetClassColor(string xmlFilePath)
-        {
-            //Loads XML File
-            XmlDocument xmlDocument = new XmlDocument();
-            xmlDocument.Load(xmlFilePath);
-
-            //Gets the Name
-            XmlNode ColorNode = xmlDocument.SelectSingleNode("/Class/ClassColor");
-            string classColor = ColorNode.InnerText;
-
-            return classColor;
-        }
-        public static void SetClassTasksByStausForUI(ObservableCollection<UniClass> uniClasses)
-        {
-            foreach (UniClass uniClass in uniClasses)
-            {
-                var Filter = TasksLogic.GetTaskStatusesObservableCollections(uniClass);
-                uniClass.FinishedTasks = Filter.Item1.Count;
-                uniClass.UnfinishedTasks = Filter.Item2.Count;
-                uniClass.CloseToDeadlineTasks = Filter.Item3.Count;
-            }
-        }
     }
 }
 

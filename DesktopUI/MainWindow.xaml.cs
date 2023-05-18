@@ -31,9 +31,9 @@ namespace DesktopUI
             //test();
         }
 
-        void test() 
+        void test()
         {
-            
+
             var TimeDifference = DateTime.Now - uniClassesCollection[2].UniTasks[1].DeadLine;
             MessageBox.Show(TimeDifference.Days.ToString());
 
@@ -60,25 +60,10 @@ namespace DesktopUI
             }
         }
 
-        private void LvClasses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            ListView classesListView = sender as ListView;
-            UniClass selectedUniClass = classesListView.SelectedItem as UniClass;
-            UiNavigationHelper.OpenTasksWindow(selectedUniClass);
-        }
-
-        public void RefreshClassesList()
-        {
-            uniClassesCollection = ClassesLogic.GetUniClasses();
-            LvClasses.ItemsSource = uniClassesCollection;
-            ClassesLogic.SetClassTasksByStausForUI(LvClasses.ItemsSource as ObservableCollection<UniClass>);
-        }
-
         private void BtnMinimizeWindow_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
         }
-
         private void BtnMaximizeWindow_Click(object sender, RoutedEventArgs e)
         {
             if (this.WindowState == WindowState.Maximized)
@@ -90,10 +75,36 @@ namespace DesktopUI
                 this.WindowState = WindowState.Maximized;
             }
         }
-
         private void BtnCloseWindow_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void LvClasses_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (LvClasses.SelectedItem == null)
+            {
+                BtnEditClass.IsEnabled = false;
+                BtnDeleteClass.IsEnabled = false;
+            }
+            else 
+            {
+                BtnEditClass.IsEnabled = true;
+                BtnDeleteClass.IsEnabled = true;
+            }
+        }
+        private void LvClasses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (LvClasses.SelectedItem == null) return;
+            ListView classesListView = sender as ListView;
+            UniClass selectedUniClass = classesListView.SelectedItem as UniClass;
+            UiNavigationHelper.OpenTasksWindow(selectedUniClass);
+        }
+        
+        public void RefreshClassesList()
+        {
+            uniClassesCollection = ClassesLogic.GetUniClassesFullData();
+            LvClasses.ItemsSource = uniClassesCollection;
         }
     }
 }

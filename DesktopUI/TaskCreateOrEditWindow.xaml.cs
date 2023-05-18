@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -23,6 +24,7 @@ namespace DesktopUI
         private CreateOrEditWindowsState createOrEditWindowsState;
         private UniClass currentUniClass;
         private UniTask currentUniTask;
+        private bool isDateSelected = false;
 
         public TaskCreateOrEditWindow(UniClass uniClass)
         {
@@ -62,6 +64,29 @@ namespace DesktopUI
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            isDateSelected = true;
+            CheckIfUserCanSaveTask();
+        }
+
+        private void TbTaskName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CheckIfUserCanSaveTask();
+        }
+
+        private void CheckIfUserCanSaveTask()
+        {
+            if (TbTaskName.Text != string.Empty && isDateSelected == true && DatePicker.Text != string.Empty)
+            {
+                BtnSave.IsEnabled = true;
+            }
+            else 
+            {
+                BtnSave.IsEnabled = false;
+            }
         }
     }
 }

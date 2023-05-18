@@ -103,5 +103,19 @@ namespace DesktopUI
         {
             this.Close();
         }
+
+        private void LvTasks_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (LvTasks.SelectedItem == null)
+            {
+                BtnEditTask.IsEnabled = false;
+                BtnDeleteTask.IsEnabled = false;
+            }
+            else
+            {
+                BtnEditTask.IsEnabled = true;
+                BtnDeleteTask.IsEnabled = true;
+            }
+        }
     }
 }

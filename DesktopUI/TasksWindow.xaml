@@ -65,24 +65,27 @@
                         Grid.Row="1"
                         HorizontalAlignment="Left">
                     <Button x:Name="BtnCreateTask"
-                    Style="{StaticResource BaseButtonTemplate}"
-                    Content="Create New Task" 
-                    Click="BtnCreateTask_Click"/>
+                            Style="{StaticResource BaseButtonTemplate}"
+                            Content="Create New Task" 
+                            Click="BtnCreateTask_Click"/>
                     <Button x:Name="BtnEditTask"
-                        Style="{StaticResource BaseButtonTemplate}"
-                    Content="Edit Task" Click="BtnEditTask_Click"/>
+                            Style="{StaticResource BaseButtonTemplate}"
+                            Content="Edit Task"
+                            IsEnabled="False"
+                            Click="BtnEditTask_Click"/>
                 </StackPanel>
                 <Button x:Name="BtnDeleteTask"
-                    Style="{StaticResource BaseButtonTemplate}"
-                    Content="Delete Task"
-                    HorizontalAlignment="Right"
-                    Click="BtnDeleteTask_Click"/>
+                        Style="{StaticResource BaseButtonTemplate}"
+                        Content="Delete Task"
+                        IsEnabled="False"
+                        HorizontalAlignment="Right"
+                        Click="BtnDeleteTask_Click"/>
             </Grid>
 
             <ListView x:Name="LvTasks"
                       Grid.Row="2"
                       Style="{StaticResource ListViewCustomStyle}"
-                      d:ItemsSource="{d:SampleData ItemCount=5}">
+                      d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="LvTasks_SelectionChanged">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid>

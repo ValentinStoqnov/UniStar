@@ -16,6 +16,7 @@ namespace Logic
         public int UnfinishedTasks { get; set; }
         public int FinishedTasks { get; set; }
         public int CloseToDeadlineTasks { get; set; }
+        public float ClassProgress { get; set; }
 
         public UniClass(string className, string classColor , bool isCompleted, ObservableCollection<UniTask> uniTasks)
         {

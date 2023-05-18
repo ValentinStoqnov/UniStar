@@ -12,6 +12,9 @@
     <Color x:Key="BasePurpleDark">#FF510071</Color>
     <SolidColorBrush x:Key="BasePurpleDarkBrush" Color="{StaticResource BasePurpleDark}"/>
 
+    <Color x:Key="DisabledBasePurpleDark">#FF270037</Color>
+    <SolidColorBrush x:Key="DisabledBasePurpleDarkBrush" Color="{StaticResource DisabledBasePurpleDark}"/>
+
     <Color x:Key="MouseOverPurple">#FF9C00DA</Color>
     <SolidColorBrush x:Key="MouseOverPurpleBrush" Color="{StaticResource MouseOverPurple}"/>
 

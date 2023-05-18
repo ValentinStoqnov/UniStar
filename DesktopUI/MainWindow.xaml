@@ -81,6 +81,7 @@
                     <Button x:Name="BtnEditClass" 
                             Content="Edit Class" 
                             Click="BtnEditClass_Click"
+                            IsEnabled="False"
                             Style="{StaticResource BaseButtonTemplate}"/>
                 </StackPanel>
                 <Button x:Name="BtnCalendarClasses" 
@@ -90,6 +91,7 @@
                 <Button x:Name="BtnDeleteClass" 
                         Content="Delete Class" 
                         Click="BtnDeleteClass_Click"
+                        IsEnabled="False"
                         HorizontalAlignment="Right"
                         Style="{StaticResource BaseButtonTemplate}"/>
             </Grid>
@@ -155,7 +157,7 @@
                   Style="{StaticResource ListViewCustomStyle}"
                   ItemsSource="{Binding uniClassesCollection, RelativeSource={RelativeSource AncestorType=Window}}" 
                   MouseDoubleClick="LvClasses_MouseDoubleClick" 
-                  d:ItemsSource="{d:SampleData ItemCount=5}">
+                  d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="LvClasses_SelectionChanged">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -182,10 +184,13 @@
                         </Rectangle>
                         <Border BorderThickness="0,0,1,0" 
                                 BorderBrush="Black">
-                            <Label Content="100%" 
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Left"
-                                   Foreground="White"/>
+                            <StackPanel VerticalAlignment="Center"
+                               HorizontalAlignment="Left" Orientation="Horizontal">
+                                <TextBlock Text="{Binding ClassProgress}" 
+                                           Foreground="White"/>
+                                <TextBlock Text="%" 
+                                           Foreground="White"/>
+                            </StackPanel>
                         </Border>
                         <TextBlock Text="{Binding ClassName}" 
                                    FontSize="30"

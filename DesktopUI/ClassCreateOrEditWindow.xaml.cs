@@ -22,6 +22,7 @@ namespace DesktopUI
     {
         private CreateOrEditWindowsState createOrEditWindowsState;
         private UniClass classToEdit;
+        private bool isColorPicked = false;
 
         public ClassCreateOrEditWindow()
         {
@@ -73,6 +74,25 @@ namespace DesktopUI
             Button btn = sender as Button;
             BtnColorPicker.Background = btn.Background;
             PopupColorPicker.IsOpen = false;
+            isColorPicked = true;
+            CheckIfUserCanSaveClass();
+        }
+
+        private void TbClassName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CheckIfUserCanSaveClass();
+        }
+
+        private void CheckIfUserCanSaveClass() 
+        {
+            if (isColorPicked == true && TbClassName.Text != string.Empty)
+            {
+                BtnSave.IsEnabled = true;
+            }
+            else
+            {
+                BtnSave.IsEnabled = false;
+            }
         }
     }
 }

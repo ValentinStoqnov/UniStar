@@ -42,7 +42,7 @@
                 <TextBox x:Name="TbClassName"
                      Margin="10,3,0,0"
                      Style="{StaticResource TextBoxCreateOrEditStyle}"
-                     Template="{StaticResource TextBoxCreteOrEditTemplate}"
+                     Template="{StaticResource TextBoxCreteOrEditTemplate}" TextChanged="TbClassName_TextChanged"
                      />
             </StackPanel>
             <StackPanel 
@@ -67,7 +67,11 @@
                         </LinearGradientBrush>
                     </Button.Background>
                 </Button>
-                <Popup x:Name="PopupColorPicker" Width="200" Height="200">
+                <Popup x:Name="PopupColorPicker" 
+                       Width="200" 
+                       Height="200"
+                       PlacementTarget="{Binding ElementName=BtnColorPicker}"
+                       Placement="Bottom">
                     <Border BorderThickness="2"
                             BorderBrush="{StaticResource OutlineDarkGrayBrush}"
                             Background="{StaticResource BackgroundDarkBrush}">
@@ -104,13 +108,14 @@
                 </Popup>
             </StackPanel>
             <Button x:Name="BtnSave"
-                Style="{StaticResource BaseButtonTemplate}"
-                Content="Save"
-                Grid.Column="0"
-                Grid.Row="2"
-                Margin="10,0,0,0"
-                HorizontalAlignment="Left"
-                Click="BtnSave_Click"/>
+                    Style="{StaticResource BaseButtonTemplate}"
+                    Content="Save"
+                    Grid.Column="0"
+                    Grid.Row="2"
+                    Margin="10,0,0,0"
+                    HorizontalAlignment="Left"
+                    IsEnabled="False"
+                    Click="BtnSave_Click"/>
             <Button x:Name="BtnCancel"
                 Style="{StaticResource BaseButtonTemplate}"
                 Content="Cancel"
