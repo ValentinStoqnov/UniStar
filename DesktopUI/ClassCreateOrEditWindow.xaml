@@ -6,13 +6,13 @@
         xmlns:local="clr-namespace:DesktopUI"
         mc:Ignorable="d"
         Title="ClassCreateOrEditWindow" 
-        Height="160" 
-        Width="350" 
+        Height="180" 
+        Width="360" 
         WindowStartupLocation="CenterScreen"
         WindowStyle="None">
     <WindowChrome.WindowChrome>
         <WindowChrome 
-            ResizeBorderThickness="6"
+            ResizeBorderThickness="0"
             CaptionHeight="28"
             CornerRadius="8,8,8,8"
             GlassFrameThickness="0">
@@ -32,7 +32,7 @@
             </Grid.RowDefinitions>
             <Border Grid.ColumnSpan="2"
                     Background="{StaticResource TitleBarDarkBrush}">
-                <TextBlock Text="Create a new class"
+                <TextBlock x:Name="TbTitle"
                            Style="{StaticResource TitleBarTbStyle}"/>
             </Border>
             <StackPanel Grid.Row="1">
@@ -40,13 +40,15 @@
                    HorizontalAlignment="Center"
                    Foreground="White"/>
                 <TextBox x:Name="TbClassName"
-                     Margin="10,10,0,0"
-                     Background="DimGray"
+                     Margin="10,3,0,0"
+                     Style="{StaticResource TextBoxCreateOrEditStyle}"
+                     Template="{StaticResource TextBoxCreteOrEditTemplate}"
                      />
             </StackPanel>
             <StackPanel 
                 Grid.Column="1"
-                Grid.Row="1">
+                Grid.Row="1"
+                HorizontalAlignment="Center">
                 <Label Content="Color" 
                    HorizontalAlignment="Center"
                    Foreground="White"/>

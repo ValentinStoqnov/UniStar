@@ -5,36 +5,71 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopUI"
         mc:Ignorable="d"
-        Title="TaskCreateOrEditWindow" Height="160" Width="300" WindowStartupLocation="CenterScreen">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="30"/>
-        </Grid.RowDefinitions>
-        <StackPanel>
-            <Label Content="Name" 
-                   HorizontalAlignment="Center"/>
-            <TextBox x:Name="TbTaskName" 
-                     Text="PutNameHere"/>
-            <Label Content="Date"
-                   HorizontalAlignment="Center"/>
-            <DatePicker x:Name="DatePicker"/>
-        </StackPanel>
-        <StackPanel Grid.Column="1">
-            <Label Content="Color" 
-                   HorizontalAlignment="Center"/>
-            <Canvas Height="30" Width="30" Background="DarkRed"/>
-        </StackPanel>
-        <Button x:Name="BtnSave" 
+        WindowStyle="None"
+        Title="TaskCreateOrEditWindow" 
+        Height="180" 
+        Width="360" 
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        
+        
+    </Window.Resources>
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+            ResizeBorderThickness="0"
+            CaptionHeight="28"
+            CornerRadius="8,8,8,8"
+            GlassFrameThickness="0">
+        </WindowChrome>
+    </WindowChrome.WindowChrome>
+    <Border BorderBrush="{StaticResource OutlineDarkGrayBrush}" 
+            BorderThickness="2">
+        <Grid Background="{StaticResource BackgroundDarkBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <Border Grid.ColumnSpan="2"
+                    Background="{StaticResource TitleBarDarkBrush}">
+                <TextBlock x:Name="TbTitle"
+                           Style="{StaticResource TitleBarTbStyle}"/>
+            </Border>
+            <StackPanel Grid.Row="1" Margin="10,0,5,0">
+                <Label Content="Name" 
+                       HorizontalAlignment="Center"
+                       Foreground="White"/>
+                <TextBox x:Name="TbTaskName"
+                         Style="{StaticResource TextBoxCreateOrEditStyle}"
+                         Template="{StaticResource TextBoxCreteOrEditTemplate}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Grid.Row="1" Margin="5,0,10,0">
+                <Label Content="Deadline Date"
+                   HorizontalAlignment="Center"
+                       Foreground="White"/>
+                <DatePicker Style="{DynamicResource DatePickerStyle1}" 
+                            CalendarStyle="{StaticResource DatePickerCalendarStyle}"
+                            x:Name="DatePicker"/>
+            </StackPanel>
+            <Button x:Name="BtnSave" 
                 Content="Save"
                 Grid.ColumnSpan="2"
-                Grid.Row="1"
-                HorizontalAlignment="Center"
-                Width="100" 
+                Grid.Row="2"
+                Style="{StaticResource BaseButtonTemplate}"
+                Margin="10,0,0,0"
+                HorizontalAlignment="Left"
                 Click="BtnSave_Click"/>
-    </Grid>
+            <Button x:Name="BtnCancel"
+                Content="Cancel"
+                Grid.Column="1"
+                Grid.Row="2"
+                Style="{StaticResource BaseButtonTemplate}"
+                Margin="0,0,10,0"
+                HorizontalAlignment="Right" Click="BtnCancel_Click"/>
+        </Grid>
+    </Border>
 </Window>

@@ -31,11 +31,13 @@ namespace DesktopUI
 
         public ClassCreateOrEditWindow(CreateOrEditWindowsState state) : this()
         {
+            TbTitle.Text = "Create a new class";
             createOrEditWindowsState = state;
         }
 
         public ClassCreateOrEditWindow(UniClass uniClass,CreateOrEditWindowsState state) : this()
         {
+            TbTitle.Text = "Edit class";
             createOrEditWindowsState = state;
             classToEdit = uniClass;
             TbClassName.Text = uniClass.ClassName;

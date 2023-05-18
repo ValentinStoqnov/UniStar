@@ -18,6 +18,9 @@
     <Color x:Key="OutlineDarkGray">#FF444444</Color>
     <SolidColorBrush x:Key="OutlineDarkGrayBrush" Color="{StaticResource OutlineDarkGray}"/>
 
+    <Color x:Key="ControlsBackgroundDarkGray">#FF484848</Color>
+    <SolidColorBrush x:Key="ControlsBackgroundDarkGrayBrush" Color="{StaticResource ControlsBackgroundDarkGray}"/>
+
 
 
 </ResourceDictionary>

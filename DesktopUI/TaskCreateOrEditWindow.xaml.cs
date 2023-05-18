@@ -32,11 +32,13 @@ namespace DesktopUI
         
         public TaskCreateOrEditWindow(UniClass uniClass, CreateOrEditWindowsState state) : this(uniClass)
         {
+            TbTitle.Text = "Create a new task";
             createOrEditWindowsState = state;
         }
 
         public TaskCreateOrEditWindow(UniClass uniClass, CreateOrEditWindowsState state, UniTask uniTask) : this(uniClass)
         {
+            TbTitle.Text = "Edit task";
             TbTaskName.Text = uniTask.TaskName;
             DatePicker.Text = uniTask.DeadLine.ToShortDateString();
             createOrEditWindowsState = state;
@@ -54,6 +56,11 @@ namespace DesktopUI
                     TasksLogic.EditTask(currentUniClass, currentUniTask, TbTaskName.Text, DatePicker.Text);
                     break;
             }
+            this.Close();
+        }
+
+        private void BtnCancel_Click(object sender, RoutedEventArgs e)
+        {
             this.Close();
         }
     }

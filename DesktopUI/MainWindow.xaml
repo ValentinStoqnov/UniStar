@@ -75,7 +75,7 @@
                     Orientation="Horizontal"
                     HorizontalAlignment="Left">
                     <Button x:Name="BtnCreateClass" 
-                            Content="Create New Class" 
+                            Content="Create a class" 
                             Click="BtnCreateClass_Click"
                             Style="{StaticResource BaseButtonTemplate}"/>
                     <Button x:Name="BtnEditClass" 

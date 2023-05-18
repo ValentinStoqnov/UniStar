@@ -11,6 +11,8 @@
                 <ResourceDictionary Source="Styles/TextBlocksDictionary.xaml"/>
                 <ResourceDictionary Source="Styles/WindowsDictionary.xaml"/>
                 <ResourceDictionary Source="Styles/ListViewStylesDictionary.xaml"/>
+                <ResourceDictionary Source="Styles/DatepickerDictionary.xaml"/>
+                <ResourceDictionary Source="Styles/TextBoxDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
