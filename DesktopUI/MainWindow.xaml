@@ -217,11 +217,18 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
             <ListView.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="Create new class" />
-                    <MenuItem Header="Edit class" />
+                <ContextMenu Background="{StaticResource BackgroundDarkBrush}"
+                             Foreground="White">
+                    <MenuItem Header="Open" Click="OpenMenuItem_Click" 
+                              Background="{StaticResource BackgroundDarkBrush}"/>
+                    <Separator/>
+                    <MenuItem Header="Create new class" Click="BtnCreateClass_Click"
+                              Background="{StaticResource BackgroundDarkBrush}"/>
+                    <MenuItem Header="Edit class"  Click="BtnEditClass_Click"
+                              Background="{StaticResource BackgroundDarkBrush}"/>
                     <Separator />
-                    <MenuItem Header="Delete class" />
+                    <MenuItem Header="Delete class" Click="BtnDeleteClass_Click"
+                              Background="{StaticResource BackgroundDarkBrush}"/>
                 </ContextMenu>
             </ListView.ContextMenu>
         </ListView>

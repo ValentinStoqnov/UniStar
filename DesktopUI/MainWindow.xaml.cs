@@ -33,6 +33,12 @@ namespace DesktopUI
 
         void test()
         {
+            //TODO:
+            //callendar
+            //Filtered tasks
+            //Context menu styling
+            //Ask on delete
+            //Possibly disabled buttons saying why they are disabled
 
             var TimeDifference = DateTime.Now - uniClassesCollection[2].UniTasks[1].DeadLine;
             MessageBox.Show(TimeDifference.Days.ToString());
@@ -46,18 +52,18 @@ namespace DesktopUI
         }
         private void BtnEditClass_Click(object sender, RoutedEventArgs e)
         {
+            if (LvClasses.SelectedItem == null) return;
             UniClass uniClass = LvClasses.SelectedItem as UniClass;
             UiNavigationHelper.OpenClassEditWindow(uniClass);
             RefreshClassesList();
         }
         private void BtnDeleteClass_Click(object sender, RoutedEventArgs e)
         {
-            if (LvClasses.SelectedItems != null)
-            {
-                UniClass uniClass = LvClasses.SelectedItem as UniClass;
-                ClassesLogic.DeleteClass(uniClass);
-                RefreshClassesList();
-            }
+            if (LvClasses.SelectedItem == null) return;
+            UniClass uniClass = LvClasses.SelectedItem as UniClass;
+            ClassesLogic.DeleteClass(uniClass);
+            RefreshClassesList();
+
         }
 
         private void BtnMinimizeWindow_Click(object sender, RoutedEventArgs e)
@@ -87,7 +93,7 @@ namespace DesktopUI
                 BtnEditClass.IsEnabled = false;
                 BtnDeleteClass.IsEnabled = false;
             }
-            else 
+            else
             {
                 BtnEditClass.IsEnabled = true;
                 BtnDeleteClass.IsEnabled = true;
@@ -100,11 +106,18 @@ namespace DesktopUI
             UniClass selectedUniClass = classesListView.SelectedItem as UniClass;
             UiNavigationHelper.OpenTasksWindow(selectedUniClass);
         }
-        
+
         public void RefreshClassesList()
         {
             uniClassesCollection = ClassesLogic.GetUniClassesFullData();
             LvClasses.ItemsSource = uniClassesCollection;
+        }
+
+        private void OpenMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (LvClasses.SelectedItem == null) return;
+            UniClass? selectedUniClass = LvClasses.SelectedItem as UniClass;
+            UiNavigationHelper.OpenTasksWindow(selectedUniClass);
         }
     }
 }
