@@ -23,8 +23,8 @@ namespace DesktopUI
             StartTaskTimeLeftTimer();
         }
 
-        private void StartTaskTimeLeftTimer() 
-        { 
+        private void StartTaskTimeLeftTimer()
+        {
             DispatcherTimer dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += DispatcherTimer_Tick;
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
@@ -32,7 +32,7 @@ namespace DesktopUI
         }
         private void DispatcherTimer_Tick(object? sender, EventArgs e)
         {
-            foreach (UniTask task in LvTasks.Items) 
+            foreach (UniTask task in LvTasks.Items)
             {
                 task.TimeLeft -= new TimeSpan(0, 0, 1);
             }
@@ -56,18 +56,18 @@ namespace DesktopUI
         }
         private void BtnEditTask_Click(object sender, RoutedEventArgs e)
         {
-            UniTask uniTask = LvTasks.SelectedItem as UniTask; 
-            UiNavigationHelper.OpenTaskEditWindow(_currentUniClass,uniTask);
+            UniTask uniTask = LvTasks.SelectedItem as UniTask;
+            UiNavigationHelper.OpenTaskEditWindow(_currentUniClass, uniTask);
             RefreshClassTaskData(_currentUniClass);
         }
         private void BtnDeleteTask_Click(object sender, RoutedEventArgs e)
         {
-            if (LvTasks.SelectedItem != null)
-            {
-                UniTask uniTask = LvTasks.SelectedItem as UniTask;
-                TasksLogic.DeleteTask(_currentUniClass, uniTask);
-                RefreshClassTaskData(_currentUniClass);
-            }
+            if (LvTasks.SelectedItem == null) return;
+            UniTask uniTask = LvTasks.SelectedItem as UniTask;
+            var isDeleteAccepted = MessageBox.Show($"Are you sure you want do delete {uniTask.TaskName} ?", "Delete Task", MessageBoxButton.YesNo);
+            if (isDeleteAccepted == MessageBoxResult.No) return;
+            TasksLogic.DeleteTask(_currentUniClass, uniTask);
+            RefreshClassTaskData(_currentUniClass);
         }
         private void BtnFinishedOrNot_Click(object sender, RoutedEventArgs e)
         {
@@ -83,7 +83,7 @@ namespace DesktopUI
 
             RefreshClassTaskData(_currentUniClass);
         }
-       
+
         private void BtnMinimizeWindow_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;

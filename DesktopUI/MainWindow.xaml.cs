@@ -36,7 +36,6 @@ namespace DesktopUI
             //TODO:
             //callendar
             //Filtered tasks
-            //Context menu styling
             //Ask on delete
             //Possibly disabled buttons saying why they are disabled
 
@@ -61,6 +60,8 @@ namespace DesktopUI
         {
             if (LvClasses.SelectedItem == null) return;
             UniClass uniClass = LvClasses.SelectedItem as UniClass;
+            var isDeleteAccepted = MessageBox.Show($"Are you sure you want do delete {uniClass.ClassName} ?", "Delete Class",MessageBoxButton.YesNo);
+            if (isDeleteAccepted == MessageBoxResult.No) return;
             ClassesLogic.DeleteClass(uniClass);
             RefreshClassesList();
 
