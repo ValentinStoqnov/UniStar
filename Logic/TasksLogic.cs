@@ -38,24 +38,24 @@ namespace Logic
             }
             return taskList;
         }
-        public static Tuple<ObservableCollection<UniTask>, ObservableCollection<UniTask>, ObservableCollection<UniTask>> GetTaskStatusesObservableCollections(UniClass uniClass)
+        public static Tuple<int, int, int> FilterTasksByStatus(UniClass uniClass)
         {
-            var finishedTasks = new ObservableCollection<UniTask>();
-            var unfinishedTasks = new ObservableCollection<UniTask>();
-            var closeToDeadLineTasks = new ObservableCollection<UniTask>();
+            int finishedTasks = 0;
+            int unfinishedTasks = 0;
+            int closeToDeadLineTasks = 0;
 
             foreach (UniTask task in GetClassTasksListByClass(uniClass))
             {
                 switch (TasksLogic.DetermineTaskStatus(task))
                 {
                     case TaskStatuses.Finished:
-                        finishedTasks.Add(task);
+                        finishedTasks++;
                         break;
                     case TaskStatuses.Unfinished:
-                        unfinishedTasks.Add(task);
+                        unfinishedTasks++;
                         break;
                     case TaskStatuses.CloseToDeadline:
-                        closeToDeadLineTasks.Add(task);
+                        closeToDeadLineTasks++;
                         break;
                 }
             }

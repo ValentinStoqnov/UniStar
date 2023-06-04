@@ -35,11 +35,9 @@ namespace DesktopUI
         {
             //TODO:
             //callendar
-            //Filtered tasks
-            //Ask on delete
             //Possibly disabled buttons saying why they are disabled
 
-            var TimeDifference = DateTime.Now - uniClassesCollection[2].UniTasks[1].DeadLine;
+            var TimeDifference = DateTimeOffset.Now - uniClassesCollection[2].UniTasks[1].DeadLine;
             MessageBox.Show(TimeDifference.Days.ToString());
 
         }

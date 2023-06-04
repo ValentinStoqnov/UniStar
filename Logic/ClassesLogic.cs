@@ -38,10 +38,10 @@ namespace Logic
         }
         private static void SetClassTasksByStausForUI(UniClass uniClass)
         {
-            var Filter = TasksLogic.GetTaskStatusesObservableCollections(uniClass);
-            uniClass.FinishedTasks = Filter.Item1.Count;
-            uniClass.UnfinishedTasks = Filter.Item2.Count;
-            uniClass.CloseToDeadlineTasks = Filter.Item3.Count;
+            var Filter = TasksLogic.FilterTasksByStatus(uniClass);
+            uniClass.FinishedTasks = Filter.Item1;
+            uniClass.UnfinishedTasks = Filter.Item2;
+            uniClass.CloseToDeadlineTasks = Filter.Item3;
         }
         private static void SetClassProgress(UniClass uniClass)
         {
