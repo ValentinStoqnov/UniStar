@@ -144,12 +144,6 @@
                        HorizontalContentAlignment="Center"
                        Width="70"
                        Foreground="White"/>
-                <Label FontSize="12" 
-                       FontWeight="SemiBold" 
-                       Content="All"
-                       HorizontalContentAlignment="Center"
-                       Width="70"
-                       Foreground="White"/>
             </StackPanel>
         </Grid>
         <ListView x:Name="LvClasses"
@@ -201,17 +195,36 @@
                         <StackPanel Orientation="Horizontal"
                                     HorizontalAlignment="Right"
                                     Grid.Column="3">
-                            <Button Content="{Binding UnfinishedTasks}"
-                                Background="IndianRed"
-                                    Width="70"/>
-                            <Button Content="{Binding CloseToDeadlineTasks}"
-                                Width="70"
-                                Background="DarkOrange"/>
-                            <Button Content="{Binding FinishedTasks}"
-                                Width="70"
-                                Background="YellowGreen"/>
-                            <Button Content="All"
-                                    Width="70"/>
+                            <Border BorderBrush="DarkOrange" 
+                                    BorderThickness="1"
+                                    Width="70">
+                                <TextBlock Text="{Binding UnfinishedTasks}"
+                                           FontSize="16"
+                                           Foreground="DarkOrange"
+                                           HorizontalAlignment="Stretch"
+                                           VerticalAlignment="Center"
+                                           TextAlignment="Center"/>
+                            </Border>
+                            <Border BorderBrush="IndianRed" 
+                                    BorderThickness="1"
+                                    Width="70">
+                                <TextBlock Text="{Binding CloseToDeadlineTasks}"
+                                           FontSize="16"
+                                           Foreground="IndianRed"
+                                           HorizontalAlignment="Stretch"
+                                           VerticalAlignment="Center"
+                                           TextAlignment="Center"/>
+                            </Border>
+                            <Border BorderBrush="YellowGreen" 
+                                    BorderThickness="1"
+                                    Width="70">
+                                <TextBlock Text="{Binding FinishedTasks}"
+                                           FontSize="16"
+                                           Foreground="YellowGreen"
+                                           HorizontalAlignment="Stretch"
+                                           VerticalAlignment="Center"
+                                           TextAlignment="Center"/>
+                            </Border>
                         </StackPanel>
                     </Grid>
                 </DataTemplate>
